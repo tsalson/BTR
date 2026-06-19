@@ -1,0 +1,239 @@
+{
+  "source_file": "bdd/features/sample.feature",
+  "feature": {
+    "name": "User Login",
+    "description": "As a user\n    I want to log in to the system\n    So that I can access my account",
+    "tags": [],
+    "background": null,
+    "scenarios": [
+      {
+        "type": "Scenario",
+        "name": "Valid login",
+        "tags": [
+          "smoke",
+          "authentication"
+        ],
+        "line": 7,
+        "steps": [
+          {
+            "keyword": "Given",
+            "effective_keyword": "Given",
+            "text": "I am on the login page",
+            "line": 8,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Navigate To Login Page",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Navigate to the application login page so that the user can begin the authentication flow."
+            }
+          },
+          {
+            "keyword": "When",
+            "effective_keyword": "When",
+            "text": "I enter username \"admin\"",
+            "line": 9,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Enter Username",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [
+                "${VALID_USERNAME}"
+              ],
+              "argument_pattern": "username",
+              "generation_hint": "Fill the username field with the provided value representing a valid account username."
+            }
+          },
+          {
+            "keyword": "And",
+            "effective_keyword": "When",
+            "text": "I enter password \"secret123\"",
+            "line": 10,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Enter Password",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [
+                "${VALID_PASSWORD}"
+              ],
+              "argument_pattern": "password",
+              "generation_hint": "Fill the password field with the provided value representing a valid account password."
+            }
+          },
+          {
+            "keyword": "And",
+            "effective_keyword": "When",
+            "text": "I click the login button",
+            "line": 11,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Click Login Button",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Click the login form submit button to submit the provided credentials for authentication."
+            }
+          },
+          {
+            "keyword": "Then",
+            "effective_keyword": "Then",
+            "text": "I see the dashboard",
+            "line": 12,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Dashboard Is Displayed",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Verify that the post-login dashboard page is displayed, confirming successful authentication."
+            }
+          },
+          {
+            "keyword": "And",
+            "effective_keyword": "Then",
+            "text": "I see a welcome message",
+            "line": 13,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Welcome Message Is Displayed",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Verify that a welcome notification or greeting message is visible on the dashboard after login."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Invalid login attempts",
+        "tags": [
+          "smoke",
+          "authentication"
+        ],
+        "line": 15,
+        "steps": [
+          {
+            "keyword": "Given",
+            "effective_keyword": "Given",
+            "text": "I am on the login page",
+            "line": 16,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Navigate To Login Page",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Navigate to the application login page so that the user can begin the authentication flow."
+            }
+          },
+          {
+            "keyword": "When",
+            "effective_keyword": "When",
+            "text": "I enter username \"<username>\"",
+            "line": 17,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Enter Username",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [
+                "${USERNAME}"
+              ],
+              "argument_pattern": "username",
+              "generation_hint": "Fill the username field with the provided value (may be invalid, empty, or valid) from the Examples table."
+            }
+          },
+          {
+            "keyword": "And",
+            "effective_keyword": "When",
+            "text": "I enter password \"<password>\"",
+            "line": 18,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Enter Password",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [
+                "${PASSWORD}"
+              ],
+              "argument_pattern": "password",
+              "generation_hint": "Fill the password field with the provided value (may be invalid, empty, or valid) from the Examples table."
+            }
+          },
+          {
+            "keyword": "And",
+            "effective_keyword": "When",
+            "text": "I click the login button",
+            "line": 19,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Click Login Button",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Click the login form submit button to submit the provided credentials for authentication."
+            }
+          },
+          {
+            "keyword": "Then",
+            "effective_keyword": "Then",
+            "text": "I see an error message \"<expected_error>\"",
+            "line": 20,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Error Message Is Displayed",
+              "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
+              "arguments": [
+                "${EXPECTED_ERROR_MESSAGE}"
+              ],
+              "argument_pattern": "expected_error",
+              "generation_hint": "Verify that the login form displays an error message matching the expected error text from the Examples table."
+            }
+          }
+        ],
+        "examples": [
+          {
+            "headers": [
+              "username",
+              "password",
+              "expected_error"
+            ],
+            "rows": [
+              [
+                "admin",
+                "wrong",
+                "Invalid credentials"
+              ],
+              [
+                "",
+                "secret",
+                "Username required"
+              ],
+              [
+                "admin",
+                "",
+                "Password required"
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "resource_imports": [],
+  "library_imports": [],
+  "unresolved_count": 11,
+  "parse_errors": [],
+  "warnings": []
+}

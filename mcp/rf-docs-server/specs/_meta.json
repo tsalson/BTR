@@ -1,0 +1,15 @@
+{
+  "robot_framework_version": "7.4.2",
+  "built": [
+    "BuiltIn",
+    "Collections",
+    "String",
+    "OperatingSystem",
+    "DateTime",
+    "Process",
+    "XML",
+    "Screenshot",
+    "Dialogs"
+  ],
+  "failed": []
+}

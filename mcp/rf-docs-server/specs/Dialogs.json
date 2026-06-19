@@ -1,0 +1,158 @@
+{
+  "name": "Dialogs",
+  "kind": "stdlib",
+  "version": "7.4.2",
+  "type": "LIBRARY",
+  "scope": "GLOBAL",
+  "source_doc": "A library providing dialogs for interacting with users.\n\n``Dialogs`` is Robot Framework's standard library that provides means\nfor pausing the test or task execution and getting input from users.\n\nLong lines in the provided messages are wrapped automatically. If you want\nto wrap lines manually, you can add newlines using the ``\\n`` character\nsequence.",
+  "keywords": [
+    {
+      "name": "Execute Manual Step",
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "message: str"
+        },
+        {
+          "name": "default_error",
+          "type": "string",
+          "default": "",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "default_error: str = "
+        }
+      ],
+      "arg_repr": "message: str, default_error: str = ",
+      "doc": "Pauses execution until user sets the keyword status.\n\nUser can press either ``PASS`` or ``FAIL`` button. In the latter case execution\nfails and an additional dialog is opened for defining the error message.\n\n``message`` is the instruction shown in the initial dialog and\n``default_error`` is the default value shown in the possible error message\ndialog.",
+      "short_doc": "Pauses execution until user sets the keyword status.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Dialogs.py",
+      "lineno": 50
+    },
+    {
+      "name": "Get Selection From User",
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "message: str"
+        },
+        {
+          "name": "values",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*values: str"
+        },
+        {
+          "name": "default",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "NAMED_ONLY",
+          "repr": "default: str | int | None = None"
+        }
+      ],
+      "arg_repr": "message: str, *values: str, default: str | int | None = None",
+      "doc": "Pauses execution and asks user to select a value.\n\nThe selected value is returned. Pressing ``Cancel`` fails the keyword.\n\n``message`` is the instruction shown in the dialog, ``values`` are\nthe options given to the user and ``default`` is the optional default value.\n\nThe default value can either be one of the specified values or the index of\nthe value starting from ``1``. For example, ``default=user1`` and ``default=1``\nin the examples below have the exact same effect.\n\nExample:\n| ${user} = | Get Selection From User | Select user | user1 | user2 | admin |\n| ${user} = | Get Selection From User | Select user | user1 | user2 | admin | default=user1 |\n| ${user} = | Get Selection From User | Select user | user1 | user2 | admin | default=1 |\n\n``default`` is new in Robot Framework 7.1.",
+      "short_doc": "Pauses execution and asks user to select a value.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Dialogs.py",
+      "lineno": 91
+    },
+    {
+      "name": "Get Selections From User",
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "message: str"
+        },
+        {
+          "name": "values",
+          "type": "string",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*values: str"
+        }
+      ],
+      "arg_repr": "message: str, *values: str",
+      "doc": "Pauses execution and asks user to select multiple values.\n\nThe selected values are returned as a list. Selecting no values is OK\nand in that case the returned list is empty. Pressing ``Cancel`` fails\nthe keyword.\n\n``message`` is the instruction shown in the dialog and ``values`` are\nthe options given to the user.\n\nExample:\n| ${users} = | Get Selections From User | Select users | user1 | user2 | admin |",
+      "short_doc": "Pauses execution and asks user to select multiple values.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Dialogs.py",
+      "lineno": 117
+    },
+    {
+      "name": "Get Value From User",
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "message: str"
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "default": "",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "default_value: str = "
+        },
+        {
+          "name": "hidden",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "hidden: bool = False"
+        }
+      ],
+      "arg_repr": "message: str, default_value: str = , hidden: bool = False",
+      "doc": "Pauses execution and asks user to input a value.\n\nValue typed by the user, or the possible default value, is returned.\nReturning an empty value is fine, but pressing ``Cancel`` fails the keyword.\n\n``message`` is the instruction shown in the dialog and ``default_value`` is\nthe possible default value shown in the input field.\n\nIf ``hidden`` is given a true value, the value typed by the user is hidden.\n``hidden`` is considered true if it is a non-empty string not equal to\n``false``, ``none`` or ``no``, case-insensitively. If it is not a string,\nits truth value is got directly using same\n[http://docs.python.org/library/stdtypes.html#truth|rules as in Python].\n\nExample:\n| ${username} = | Get Value From User | Input user name | default    |\n| ${password} = | Get Value From User | Input password  | hidden=yes |",
+      "short_doc": "Pauses execution and asks user to input a value.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Dialogs.py",
+      "lineno": 65
+    },
+    {
+      "name": "Pause Execution",
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "default": "Execution paused. Press OK to continue.",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "message: str = Execution paused. Press OK to continue."
+        }
+      ],
+      "arg_repr": "message: str = Execution paused. Press OK to continue.",
+      "doc": "Pauses execution until user clicks ``Ok`` button.\n\n``message`` is the message shown in the dialog.",
+      "short_doc": "Pauses execution until user clicks ``Ok`` button.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Dialogs.py",
+      "lineno": 42
+    }
+  ]
+}

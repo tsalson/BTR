@@ -1,0 +1,41 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "mcp": {
+    "gherkin-mcp": {
+      "type": "local",
+      "command": [
+        "uv",
+        "run",
+        "mcp/gherkin-sever/server.py"
+      ],
+      "enabled": true
+    },
+    "rf-docs-mcp": {
+      "type": "local",
+      "command": [
+        "uv",
+        "run",
+        "mcp/rf-docs-server/server.py"
+      ],
+      "enabled": true
+    },
+    "rf-runner-mcp": {
+      "type": "local",
+      "command": [
+        "uv",
+        "run",
+        "mcp/rf-runner-server/server.py"
+      ],
+      "enabled": true
+    },
+    "robocop-mcp": {
+      "type": "local",
+      "command": [
+        "uv",
+        "run",
+        "mcp/robocop-server/server.py"
+      ],
+      "enabled": true
+    }
+  }
+}

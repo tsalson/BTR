@@ -1,0 +1,1654 @@
+{
+  "name": "Collections",
+  "kind": "stdlib",
+  "version": "7.4.2",
+  "type": "LIBRARY",
+  "scope": "GLOBAL",
+  "source_doc": "A library providing keywords for handling lists and dictionaries.\n\n``Collections`` is Robot Framework's standard library that provides a\nset of keywords for handling Python lists and dictionaries. This\nlibrary has keywords, for example, for modifying and getting\nvalues from lists and dictionaries (e.g. `Append To List`, `Get\nFrom Dictionary`) and for verifying their contents (e.g. `Lists\nShould Be Equal`, `Dictionary Should Contain Value`).\n\n== Table of contents ==\n\n- `Related keywords in BuiltIn`\n- `Using with list-like and dictionary-like objects`\n- `Ignore case`\n- `Data in examples`\n- `Keywords`\n\n= Related keywords in BuiltIn =\n\nFollowing keywords in the BuiltIn library can also be used with\nlists and dictionaries:\n\n| = Keyword Name =             | = Applicable With = |\n| `Create List`                | lists |\n| `Create Dictionary`          | dicts |\n| `Get Length`                 | both  |\n| `Length Should Be`           | both  |\n| `Should Be Empty`            | both  |\n| `Should Not Be Empty`        | both  |\n| `Should Contain`             | both  |\n| `Should Not Contain`         | both  |\n| `Should Contain X Times`     | lists |\n| `Should Not Contain X Times` | lists |\n| `Get Count`                  | lists |\n\n= Using with list-like and dictionary-like objects =\n\nList related keywords can in general be used with tuples and other sequences,\nnot only with ``list`` objects. List keywords that validate something typically\neven work with sets and mappings (with mappings they look only at keys).\nIf keywords that modify lists are used with immutable sequences such as tuples,\nvalues are automatically converted to lists. In such cases the original value\nobviously is not mutated, but these keywords also return the modified value\nand that can be used instead.\n\nDictionary related keywords also generally work with any mapping, not only\nwith ``dict`` objects. If keywords that modify dictionaries are used with\nimmutable mappings, values are automatically converted to dictionaries.\nOriginal values cannot be modified in these cases either, but modified values\nare returned and can be used instead.\n\nWhat values each keyword actually accepts can be seen from argument types\nand keyword documentation.\n\nReturning values from keywords that modify lists or dictionaries is new\nin Robot Framework 7.4. With earlier version these keywords could only\nbe used with mutable values.\n\n= Ignore case =\n\nVarious keywords support ignoring case in comparisons by using the optional\n``ignore_case`` argument. Case-insensitivity can be enabled by using\n``ignore_case=True`` and it works recursively.\n\nWith dictionaries, it is also possible to use special values ``KEYS`` and\n``VALUES`` to normalize only keys or values, respectively. These options\nthemselves are case-insensitive and also singular forms ``KEY`` and\n``VALUE`` are supported.\n\nIf a dictionary contains keys that normalize to the same value, e.g.\n``{'a': 1, 'A': 2}``, normalizing keys causes an error.\n\nExamples:\n| `Lists Should Be Equal`        | ${list1} | ${list2} | ignore_case=True   |\n| `Dictionaries Should Be Equal` | ${dict1} | ${dict2} | ignore_case=VALUES |\n\nNotice that some keywords accept also an older ``case_insensitive`` argument\nin addition to ``ignore_case``. The latter is new in Robot Framework 7.0 and\nshould be used unless there is a need to support older versions. The old\nargument is considered deprecated and will eventually be removed.\n\nStarting from Robot Framework 7.4, case-insensitivity works also with\nbytes, not only with strings.\n\n= Data in examples =\n\nList related keywords use variables in format ``${Lx}`` in their examples.\nThey mean lists with as many alphabetic characters as specified by ``x``.\nFor example, ``${L1}`` means ``['a']`` and ``${L3}`` means\n``['a', 'b', 'c']``.\n\nDictionary keywords use similar ``${Dx}`` variables. For example, ``${D1}``\nmeans ``{'a': 1}`` and ``${D3}`` means ``{'a': 1, 'b': 2, 'c': 3}``.",
+  "keywords": [
+    {
+      "name": "Append To List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        },
+        {
+          "name": "values",
+          "type": "object",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*values: object"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence, *values: object",
+      "doc": "Adds ``values`` to the end of ``list``.\n\nStarting from Robot Framework 7.4, the modified list is also returned.\n\nExample:\n| Append To List | ${L1} | xxx |   |   |\n| Append To List | ${L2} | x   | y | z |\n=>\n| ${L1} = ['a', 'xxx']\n| ${L2} = ['a', 'b', 'x', 'y', 'z']",
+      "short_doc": "Adds ``values`` to the end of ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 50
+    },
+    {
+      "name": "Combine Lists",
+      "args": [
+        {
+          "name": "lists",
+          "type": "Union",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*lists: Sequence | Mapping | Set"
+        }
+      ],
+      "arg_repr": "*lists: Sequence | Mapping | Set",
+      "doc": "Combines the given ``lists`` together and returns the result.\n\nThe given lists are not altered by this keyword.\n\nExample:\n| ${x} = | Combine Lists | ${L1} | ${L2} |       |\n| ${y} = | Combine Lists | ${L1} | ${L2} | ${L1} |\n=>\n| ${x} = ['a', 'a', 'b']\n| ${y} = ['a', 'a', 'b', 'a']\n| ${L1} and ${L2} are not changed.",
+      "short_doc": "Combines the given ``lists`` together and returns the result.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 100
+    },
+    {
+      "name": "Convert To Dictionary",
+      "args": [
+        {
+          "name": "item",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "item: object"
+        }
+      ],
+      "arg_repr": "item: object",
+      "doc": "Converts the given ``item`` to a Python ``dict`` type.\n\nMainly useful for converting other mappings to normal dictionaries.\nThis includes converting Robot Framework's own ``DotDict`` instances\nthat it uses if variables are created using the ``&{var}`` syntax.\n\nUse `Create Dictionary` from the BuiltIn library for constructing new\ndictionaries.",
+      "short_doc": "Converts the given ``item`` to a Python ``dict`` type.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 570
+    },
+    {
+      "name": "Convert To List",
+      "args": [
+        {
+          "name": "item",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "item: object"
+        }
+      ],
+      "arg_repr": "item: object",
+      "doc": "Converts the given ``item`` to a Python ``list`` type.\n\nMainly useful for converting tuples and other iterable to lists.\nUse `Create List` from the BuiltIn library for constructing new lists.\n\nTo split strings into characters, the `Split String To Characters` from\nthe String Library can be used.",
+      "short_doc": "Converts the given ``item`` to a Python ``list`` type.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 39
+    },
+    {
+      "name": "Copy Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "deepcopy",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "deepcopy: bool = False"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, deepcopy: bool = False",
+      "doc": "Returns a copy of the given dictionary.\n\nBy default, returns a new dictionary with same items as in the original.\nSet the ``deepcopy`` argument to a true value if also items should\nbe copied.\n\nThe given dictionary is never altered by this keyword.",
+      "short_doc": "Returns a copy of the given dictionary.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 686
+    },
+    {
+      "name": "Copy List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "deepcopy",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "deepcopy: bool = False"
+        }
+      ],
+      "arg_repr": "list_: Sequence, deepcopy: bool = False",
+      "doc": "Returns a copy of the given list.\n\nBy default, returns a new list with same items as in the original.\nSet the ``deepcopy`` argument to a true value if also items should\nbe copied.\n\nThe given list is never altered by this keyword.",
+      "short_doc": "Returns a copy of the given list.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 321
+    },
+    {
+      "name": "Count Values In List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "start",
+          "type": "integer",
+          "default": "0",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "start: int = 0"
+        },
+        {
+          "name": "end",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "end: int | None = None"
+        }
+      ],
+      "arg_repr": "list_: Sequence, value: object, start: int = 0, end: int | None = None",
+      "doc": "Returns the number of occurrences of the given ``value`` in ``list``.\n\nThe search can be narrowed to the selected sublist by the ``start`` and\n``end`` indexes having the same semantics as with `Get Slice From List`\nkeyword. The given list is never altered by this keyword.\n\nExample:\n| ${x} = | Count Values In List | ${L3} | b |\n=>\n| ${x} = 1\n| ${L3} is not changed",
+      "short_doc": "Returns the number of occurrences of the given ``value`` in ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 267
+    },
+    {
+      "name": "Dictionaries Should Be Equal",
+      "args": [
+        {
+          "name": "dict1",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dict1: Mapping"
+        },
+        {
+          "name": "dict2",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dict2: Mapping"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "values",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "values: bool = True"
+        },
+        {
+          "name": "ignore_keys",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_keys: Sequence | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        },
+        {
+          "name": "ignore_value_order",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_value_order: bool = False"
+        }
+      ],
+      "arg_repr": "dict1: Mapping, dict2: Mapping, msg: str | None = None, values: bool = True, ignore_keys: Sequence | None = None, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False, ignore_value_order: bool = False",
+      "doc": "Fails if the given dictionaries are not equal.\n\nFirst the equality of dictionaries' keys is checked and after that all\nthe key value pairs. If there are differences between the values, those\nare listed in the error message. The types of the dictionaries do not\nneed to be same.\n\n``ignore_keys`` can be used to provide a list of keys to ignore in the\ncomparison. This option is new in Robot Framework 6.1. It works recursively\nwith nested dictionaries starting from Robot Framework 7.0.\n\nExamples:\n| Dictionaries Should Be Equal | ${dict} | ${expected} |\n| Dictionaries Should Be Equal | ${dict} | ${expected} | ignore_keys=${ignored} |\n| Dictionaries Should Be Equal | ${dict} | ${expected} | ignore_keys=['key1', 'key2'] |\n\nSee `Lists Should Be Equal` for more information about configuring\nthe error message with ``msg`` and ``values`` arguments.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.\n\nThe ``ignore_value_order`` argument can be used to make comparison in case of\nlist-like values to ignore the order of the elements in the lists.\nUsing it requires items to be sortable.\nThis option is new in Robot Framework 7.2.",
+      "short_doc": "Fails if the given dictionaries are not equal.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 900
+    },
+    {
+      "name": "Dictionary Should Contain Item",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "key",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "key: object"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, key: object, value: object, msg: str | None = None, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False",
+      "doc": "An item of ``key`` / ``value`` must be found in a ``dictionary``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "An item of ``key`` / ``value`` must be found in a ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 837
+    },
+    {
+      "name": "Dictionary Should Contain Key",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "key",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "key: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, key: object, msg: str | None = None, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False",
+      "doc": "Fails if ``key`` is not found from ``dictionary``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if ``key`` is not found from ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 799
+    },
+    {
+      "name": "Dictionary Should Contain Sub Dictionary",
+      "args": [
+        {
+          "name": "dict1",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dict1: Mapping"
+        },
+        {
+          "name": "dict2",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dict2: Mapping"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "values",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "values: bool = True"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        },
+        {
+          "name": "ignore_value_order",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_value_order: bool = False"
+        }
+      ],
+      "arg_repr": "dict1: Mapping, dict2: Mapping, msg: str | None = None, values: bool = True, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False, ignore_value_order: bool = False",
+      "doc": "Fails unless all items in ``dict2`` are found from ``dict1``.\n\nSee `Lists Should Be Equal` for more information about configuring\nthe error message with ``msg`` and ``values`` arguments.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.\n\nThe ``ignore_value_order`` argument can be used to make comparison in case of\nlist-like values to ignore the order of the elements in the lists.\nUsing it requires items to be sortable.\nThis option is new in Robot Framework 7.2.",
+      "short_doc": "Fails unless all items in ``dict2`` are found from ``dict1``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 985
+    },
+    {
+      "name": "Dictionary Should Contain Value",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, value: object, msg: str | None = None, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False",
+      "doc": "Fails if ``value`` is not found from ``dictionary``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if ``value`` is not found from ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 862
+    },
+    {
+      "name": "Dictionary Should Not Contain Key",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "key",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "key: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, key: object, msg: str | None = None, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False",
+      "doc": "Fails if ``key`` is found from ``dictionary``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if ``key`` is found from ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 818
+    },
+    {
+      "name": "Dictionary Should Not Contain Value",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "Union",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, value: object, msg: str | None = None, ignore_case: Literal['KEY', 'KEYS', 'VALUE', 'VALUES'] | bool = False",
+      "doc": "Fails if ``value`` is found from ``dictionary``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if ``value`` is found from ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 881
+    },
+    {
+      "name": "Get Dictionary Items",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "sort_keys",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "sort_keys: bool = True"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, sort_keys: bool = True",
+      "doc": "Returns items of the given ``dictionary`` as a list.\n\nUses `Get Dictionary Keys` to get keys and then returns corresponding\nitems. By default, keys are sorted and items returned in that order,\nbut this can be changed by giving ``sort_keys`` a false value.\n\nItems are returned as a flat list so that first item is a key,\nsecond item is a corresponding value, third item is the second key,\nand so on.\n\nThe given ``dictionary`` is never altered by this keyword.\n\nExample:\n| ${sorted} =   | Get Dictionary Items | ${D3} |\n| ${unsorted} = | Get Dictionary Items | ${D3} | sort_keys=False |",
+      "short_doc": "Returns items of the given ``dictionary`` as a list.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 747
+    },
+    {
+      "name": "Get Dictionary Keys",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "sort_keys",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "sort_keys: bool = True"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, sort_keys: bool = True",
+      "doc": "Returns keys of the given ``dictionary`` as a list.\n\nBy default, keys are returned in sorted order (assuming they are\nsortable), but they can be returned in the original order by giving\n``sort_keys`` a false value.\n\nThe given ``dictionary`` is never altered by this keyword.\n\nExample:\n| ${sorted} =   | Get Dictionary Keys | ${D3} |\n| ${unsorted} = | Get Dictionary Keys | ${D3} | sort_keys=False |",
+      "short_doc": "Returns keys of the given ``dictionary`` as a list.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 703
+    },
+    {
+      "name": "Get Dictionary Values",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "sort_keys",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "sort_keys: bool = True"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, sort_keys: bool = True",
+      "doc": "Returns values of the given ``dictionary`` as a list.\n\nUses `Get Dictionary Keys` to get keys and then returns corresponding\nvalues. By default, keys are sorted and values returned in that order,\nbut this can be changed by giving ``sort_keys`` a false value.\n\nThe given ``dictionary`` is never altered by this keyword.\n\nExample:\n| ${sorted} =   | Get Dictionary Values | ${D3} |\n| ${unsorted} = | Get Dictionary Values | ${D3} | sort_keys=False |",
+      "short_doc": "Returns values of the given ``dictionary`` as a list.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 727
+    },
+    {
+      "name": "Get From Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "key",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "key: object"
+        },
+        {
+          "name": "default",
+          "type": "object",
+          "default": "",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "default: object = "
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, key: object, default: object = ",
+      "doc": "Returns a value from the given ``dictionary`` based on the given ``key``.\n\nIf the given ``key`` cannot be found from the ``dictionary``, this\nkeyword fails. If optional ``default`` value is given, it will be\nreturned instead of failing.\n\nThe given dictionary is never altered by this keyword.\n\nExample:\n| ${value} = | Get From Dictionary | ${D3} | b |\n=>\n| ${value} = 2\n\nSupport for ``default`` is new in Robot Framework 6.0.",
+      "short_doc": "Returns a value from the given ``dictionary`` based on the given ``key``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 771
+    },
+    {
+      "name": "Get From List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "index",
+          "type": "integer",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "index: int"
+        }
+      ],
+      "arg_repr": "list_: Sequence, index: int",
+      "doc": "Returns the value specified with an ``index`` from ``list``.\n\nThe given list is never altered by this keyword.\n\nIndex ``0`` means the first position, ``1`` the second, and so on.\nSimilarly, ``-1`` is the last position, ``-2`` the second last, and so on.\nUsing an index that does not exist on the list causes an error.\nThe index can be either an integer or a string that can be converted\nto an integer.\n\nExamples (including Python equivalents in comments):\n| ${x} = | Get From List | ${L5} | 0  | # L5[0]  |\n| ${y} = | Get From List | ${L5} | -2 | # L5[-2] |\n=>\n| ${x} = 'a'\n| ${y} = 'd'\n| ${L5} is not changed",
+      "short_doc": "Returns the value specified with an ``index`` from ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 205
+    },
+    {
+      "name": "Get Index From List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "start",
+          "type": "Union",
+          "default": "0",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "start: int | Literal[''] = 0"
+        },
+        {
+          "name": "end",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "end: int | None = None"
+        }
+      ],
+      "arg_repr": "list_: Sequence, value: object, start: int | Literal[''] = 0, end: int | None = None",
+      "doc": "Returns the index of the first occurrence of the ``value`` on the list.\n\nThe search can be narrowed to the selected sublist by the ``start`` and\n``end`` indexes having the same semantics as with `Get Slice From List`\nkeyword. In case the value is not found, -1 is returned. The given list\nis never altered by this keyword.\n\nExample:\n| ${x} = | Get Index From List | ${L5} | d |\n=>\n| ${x} = 3\n| ${L5} is not changed",
+      "short_doc": "Returns the index of the first occurrence of the ``value`` on the list.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 288
+    },
+    {
+      "name": "Get Match Count",
+      "args": [
+        {
+          "name": "list",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list: Sequence | Mapping | Set"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "pattern: str"
+        },
+        {
+          "name": "case_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "case_insensitive: bool | None = None"
+        },
+        {
+          "name": "whitespace_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "whitespace_insensitive: bool | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        },
+        {
+          "name": "ignore_whitespace",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_whitespace: bool = False"
+        }
+      ],
+      "arg_repr": "list: Sequence | Mapping | Set, pattern: str, case_insensitive: bool | None = None, whitespace_insensitive: bool | None = None, ignore_case: bool = False, ignore_whitespace: bool = False",
+      "doc": "Returns the count of matches to ``pattern`` in ``list``.\n\nFor more information on ``pattern``, ``case_insensitive/ignore_case``, and\n``whitespace_insensitive/ignore_whitespace``, see `Should Contain Match`.\n\nExamples:\n| ${count}= | Get Match Count | ${list} | a* | # ${count} will be the count of strings beginning with 'a' |\n| ${count}= | Get Match Count | ${list} | regexp=a.* | # ${matches} will be the count of strings beginning with 'a' (regexp version) |\n| ${count}= | Get Match Count | ${list} | a* | case_insensitive=${True} | # ${matches} will be the count of strings beginning with 'a' or 'A' |",
+      "short_doc": "Returns the count of matches to ``pattern`` in ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 1252
+    },
+    {
+      "name": "Get Matches",
+      "args": [
+        {
+          "name": "list",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list: Sequence | Mapping | Set"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "pattern: str"
+        },
+        {
+          "name": "case_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "case_insensitive: bool | None = None"
+        },
+        {
+          "name": "whitespace_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "whitespace_insensitive: bool | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        },
+        {
+          "name": "ignore_whitespace",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_whitespace: bool = False"
+        }
+      ],
+      "arg_repr": "list: Sequence | Mapping | Set, pattern: str, case_insensitive: bool | None = None, whitespace_insensitive: bool | None = None, ignore_case: bool = False, ignore_whitespace: bool = False",
+      "doc": "Returns a list of matches to ``pattern`` in ``list``.\n\nFor more information on ``pattern``, ``case_insensitive/ignore_case``, and\n``whitespace_insensitive/ignore_whitespace``, see `Should Contain Match`.\n\nExamples:\n| ${matches}= | Get Matches | ${list} | a* | # ${matches} will contain any string beginning with 'a' |\n| ${matches}= | Get Matches | ${list} | regexp=a.* | # ${matches} will contain any string beginning with 'a' (regexp version) |\n| ${matches}= | Get Matches | ${list} | a* | ignore_case=True | # ${matches} will contain any string beginning with 'a' or 'A' |",
+      "short_doc": "Returns a list of matches to ``pattern`` in ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 1224
+    },
+    {
+      "name": "Get Slice From List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "start",
+          "type": "Union",
+          "default": "0",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "start: int | Literal[''] = 0"
+        },
+        {
+          "name": "end",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "end: int | None = None"
+        }
+      ],
+      "arg_repr": "list_: Sequence, start: int | Literal[''] = 0, end: int | None = None",
+      "doc": "Returns a slice of the given list between ``start`` and ``end`` indexes.\n\nThe given list is never altered by this keyword.\n\nIf both ``start`` and ``end`` are given, a sublist containing values\nfrom ``start`` to ``end`` is returned. This is the same as\n``list[start:end]`` in Python. To get all items from the beginning,\nuse 0 as the start value, and to get all items until and including\nthe end, use ``None`` (default) as the end value.\n\nUsing ``start`` or ``end`` not found on the list is the same as using\nthe largest (or smallest) available index.\n\nExamples (incl. Python equivalents in comments):\n| ${x} = | Get Slice From List | ${L5} | 2      | 4 | # L5[2:4]    |\n| ${y} = | Get Slice From List | ${L5} | 1      |   | # L5[1:None] |\n| ${z} = | Get Slice From List | ${L5} | end=-2 |   | # L5[0:-2]   |\n=>\n| ${x} = ['c', 'd']\n| ${y} = ['b', 'c', 'd', 'e']\n| ${z} = ['a', 'b', 'c']\n| ${L5} is not changed",
+      "short_doc": "Returns a slice of the given list between ``start`` and ``end`` indexes.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 229
+    },
+    {
+      "name": "Insert Into List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        },
+        {
+          "name": "index",
+          "type": "integer",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "index: int"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence, index: int, value: object",
+      "doc": "Inserts ``value`` into ``list`` to the position specified with ``index``.\n\nIndex ``0`` adds the value into the first position, ``1`` to the second,\nand so on. Inserting from right works with negative indices so that\n``-1`` is the second last position, ``-2`` third last, and so on. Use\n`Append To List` to add items to the end of the list.\n\nIf the absolute value of the index is greater than\nthe length of the list, the value is added at the end\n(positive index) or the beginning (negative index). An index\ncan be given either as an integer or a string that can be\nconverted to an integer.\n\nStarting from Robot Framework 7.4, the modified list is also returned.\n\nExample:\n| Insert Into List | ${L1} | 0     | xxx |\n| Insert Into List | ${L2} | ${-1} | xxx |\n=>\n| ${L1} = ['xxx', 'a']\n| ${L2} = ['a', 'xxx', 'b']",
+      "short_doc": "Inserts ``value`` into ``list`` to the position specified with ``index``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 69
+    },
+    {
+      "name": "Keep In Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: MutableMapping"
+        },
+        {
+          "name": "keys",
+          "type": "object",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*keys: object"
+        }
+      ],
+      "arg_repr": "dictionary: MutableMapping, *keys: object",
+      "doc": "Keeps the given ``keys`` in the ``dictionary`` and removes all others.\n\nIf the given ``key`` does not exist in the ``dictionary``, it is ignored.\n\nStarting from Robot Framework 7.4, the modified dictionary is also returned.\n\nExample:\n| Keep In Dictionary | ${D5} | b | x | d |\n=>\n| ${D5} = {'b': 2, 'd': 4}",
+      "short_doc": "Keeps the given ``keys`` in the ``dictionary`` and removes all others.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 666
+    },
+    {
+      "name": "List Should Contain Sub List",
+      "args": [
+        {
+          "name": "list1",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list1: Sequence | Mapping | Set"
+        },
+        {
+          "name": "list2",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list2: Sequence | Mapping | Set"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "values",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "values: bool = True"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        }
+      ],
+      "arg_repr": "list1: Sequence | Mapping | Set, list2: Sequence | Mapping | Set, msg: str | None = None, values: bool = True, ignore_case: bool = False",
+      "doc": "Fails if not all elements in ``list2`` are found in ``list1``.\n\nThe order of values and the number of values are not taken into\naccount.\n\nSee `Lists Should Be Equal` for more information about configuring\nthe error message with ``msg`` and ``values`` arguments.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if not all elements in ``list2`` are found in ``list1``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 521
+    },
+    {
+      "name": "List Should Contain Value",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence | Mapping | Set"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        }
+      ],
+      "arg_repr": "list_: Sequence | Mapping | Set, value: object, msg: str | None = None, ignore_case: bool = False",
+      "doc": "Fails if the ``value`` is not found from ``list``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if the ``value`` is not found from ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 367
+    },
+    {
+      "name": "List Should Not Contain Duplicates",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        }
+      ],
+      "arg_repr": "list_: Sequence, msg: str | None = None, ignore_case: bool = False",
+      "doc": "Fails if any element in the ``list`` is found from it more than once.\n\nThe default error message lists all the elements that were found\nfrom the ``list`` multiple times, but it can be overridden by giving\na custom ``msg``. All multiple times found items and their counts are\nalso logged.\n\nThis keyword works with all iterables that can be converted to a list.\nThe original iterable is never altered.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if any element in the ``list`` is found from it more than once.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 405
+    },
+    {
+      "name": "List Should Not Contain Value",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence | Mapping | Set"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        }
+      ],
+      "arg_repr": "list_: Sequence | Mapping | Set, value: object, msg: str | None = None, ignore_case: bool = False",
+      "doc": "Fails if the ``value`` is found from ``list``.\n\nUse the ``msg`` argument to override the default error message.\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if the ``value`` is found from ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 386
+    },
+    {
+      "name": "Lists Should Be Equal",
+      "args": [
+        {
+          "name": "list1",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list1: Sequence | Mapping | Set"
+        },
+        {
+          "name": "list2",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list2: Sequence | Mapping | Set"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "values",
+          "type": "boolean",
+          "default": "True",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "values: bool = True"
+        },
+        {
+          "name": "names",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "names: Mapping[int, str] | Sequence[str] | None = None"
+        },
+        {
+          "name": "ignore_order",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_order: bool = False"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        }
+      ],
+      "arg_repr": "list1: Sequence | Mapping | Set, list2: Sequence | Mapping | Set, msg: str | None = None, values: bool = True, names: Mapping[int, str] | Sequence[str] | None = None, ignore_order: bool = False, ignore_case: bool = False",
+      "doc": "Fails if given lists are unequal.\n\nThe keyword first verifies that the lists have equal lengths, and then\nit checks are all their values equal. Possible differences between the\nvalues are listed in the default error message like ``Index 4: ABC !=\nAbc``. The types of the lists do not need to be the same. For example,\nPython tuple and list with same content are considered equal.\n\nThe error message can be configured using ``msg`` and ``values``\narguments:\n- If ``msg`` is not given, the default error message is used.\n- If ``msg`` is given and ``values`` gets a value considered true,\n  the error message starts with the given\n  ``msg`` followed by a newline and the default message.\n- If ``msg`` is given and ``values``  is not given a true value,\n  the error message is just the given ``msg``.\n\nThe optional ``names`` argument can be used for naming the indices\nshown in the default error message. It can either be a list of names\nmatching the indices in the lists or a dictionary where keys are\nindices that need to be named. It is not necessary to name all indices.\nWhen using a dictionary, keys can be either integers\nor strings that can be converted to integers.\n\nExamples:\n| ${names} = | Create List | First Name | Family Name | Email |\n| Lists Should Be Equal | ${people1} | ${people2} | names=${names} |\n| ${names} = | Create Dictionary | 0=First Name | 2=Email |\n| Lists Should Be Equal | ${people1} | ${people2} | names=${names} |\n\nIf the items in index 2 would differ in the above examples, the error\nmessage would contain a row like ``Index 2 (email): name@foo.com !=\nname@bar.com``.\n\nThe optional ``ignore_order`` argument can be used to ignore the order\nof the elements in the lists. Using it requires items to be sortable.\nThis option works recursively with nested lists starting from Robot\nFramework 7.0.\n\nExample:\n| ${list1} = | Create List | apple | cherry | banana |\n| ${list2} = | Create List | cherry | banana | apple |\n| Lists Should Be Equal | ${list1} | ${list2} | ignore_order=True |\n\nThe ``ignore_case`` argument can be used to make comparison case-insensitive.\nSee the `Ignore case` section for more details. This option is new in\nRobot Framework 7.0.",
+      "short_doc": "Fails if given lists are unequal.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 436
+    },
+    {
+      "name": "Log Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: Mapping"
+        },
+        {
+          "name": "level",
+          "type": "Literal",
+          "default": "INFO",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "level: Literal['TRACE', 'DEBUG', 'INFO', 'CONSOLE', 'HTML', 'WARN', 'ERROR'] = INFO"
+        }
+      ],
+      "arg_repr": "dictionary: Mapping, level: Literal['TRACE', 'DEBUG', 'INFO', 'CONSOLE', 'HTML', 'WARN', 'ERROR'] = INFO",
+      "doc": "Logs the contents of the ``dictionary`` using the given ``level``.",
+      "short_doc": "Logs the contents of the ``dictionary`` using the given ``level``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 1018
+    },
+    {
+      "name": "Log List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        },
+        {
+          "name": "level",
+          "type": "Literal",
+          "default": "INFO",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "level: Literal['TRACE', 'DEBUG', 'INFO', 'CONSOLE', 'HTML', 'WARN', 'ERROR'] = INFO"
+        }
+      ],
+      "arg_repr": "list_: Sequence, level: Literal['TRACE', 'DEBUG', 'INFO', 'CONSOLE', 'HTML', 'WARN', 'ERROR'] = INFO",
+      "doc": "Logs contents of the ``list`` using the given ``level``.",
+      "short_doc": "Logs contents of the ``list`` using the given ``level``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 549
+    },
+    {
+      "name": "Pop From Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: MutableMapping"
+        },
+        {
+          "name": "key",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "key: object"
+        },
+        {
+          "name": "default",
+          "type": "object",
+          "default": "",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "default: object = "
+        }
+      ],
+      "arg_repr": "dictionary: MutableMapping, key: object, default: object = ",
+      "doc": "Pops the given ``key`` from the ``dictionary`` and returns its value.\n\nThe keyword fails if the given ``key`` cannot be found from the ``dictionary``\nby default. If optional ``default`` value is given, it will be returned instead.\n\nExample:\n| ${val}= | Pop From Dictionary | ${D3} | b |\n=>\n| ${val} = 2\n| ${D3} = {'a': 1, 'c': 3}",
+      "short_doc": "Pops the given ``key`` from the ``dictionary`` and returns its value.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 644
+    },
+    {
+      "name": "Remove Duplicates",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: Sequence"
+        }
+      ],
+      "arg_repr": "list_: Sequence",
+      "doc": "Returns a list without duplicates based on the given ``list``.\n\nCreates and returns a new list that contains all items in the given\nlist so that one item can appear only once. Order of the items in\nthe new list is the same as in the original except for missing\nduplicates. Number of the removed duplicates is logged.",
+      "short_doc": "Returns a list without duplicates based on the given ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 189
+    },
+    {
+      "name": "Remove From Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: MutableMapping"
+        },
+        {
+          "name": "keys",
+          "type": "object",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*keys: object"
+        }
+      ],
+      "arg_repr": "dictionary: MutableMapping, *keys: object",
+      "doc": "Removes the given ``keys`` from the ``dictionary``.\n\nIf the given ``key`` does not exist in the ``dictionary``, it is ignored.\n\nStarting from Robot Framework 7.4, the modified dictionary is also returned.\n\nExample:\n| Remove From Dictionary | ${D3} | b | x | y |\n=>\n| ${D3} = {'a': 1, 'c': 3}",
+      "short_doc": "Removes the given ``keys`` from the ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 620
+    },
+    {
+      "name": "Remove From List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        },
+        {
+          "name": "index",
+          "type": "integer",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "index: int"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence, index: int",
+      "doc": "Removes and returns the value specified with an ``index`` from ``list``.\n\nIndex ``0`` means the first position, ``1`` the second and so on.\nSimilarly, ``-1`` is the last position, ``-2`` the second last, and so on.\nUsing an index that does not exist on the list causes an error.\nThe index can be either an integer or a string that can be converted\nto an integer.\n\nExample:\n| ${x} = | Remove From List | ${L2} | 0 |\n=>\n| ${x} = 'a'\n| ${L2} = ['b']",
+      "short_doc": "Removes and returns the value specified with an ``index`` from ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 169
+    },
+    {
+      "name": "Remove Values From List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        },
+        {
+          "name": "values",
+          "type": "object",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*values: object"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence, *values: object",
+      "doc": "Removes all occurrences of given ``values`` from ``list``.\n\nIt is not an error if a value does not exist in the list at all.\n\nStarting from Robot Framework 7.4, the modified list is also returned.\n\nExample:\n| Remove Values From List | ${L4} | a | c | e | f |\n=>\n| ${L4} = ['b', 'd']",
+      "short_doc": "Removes all occurrences of given ``values`` from ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 148
+    },
+    {
+      "name": "Reverse List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence",
+      "doc": "Reverses the given list in place.\n\nNote that the given list is changed and nothing is returned. Use\n`Copy List` first, if you need to keep also the original order.\n\nStarting from Robot Framework 7.4, the reversed list is also returned.\n\n| Reverse List | ${L3} |\n=>\n| ${L3} = ['c', 'b', 'a']",
+      "short_doc": "Reverses the given list in place.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 334
+    },
+    {
+      "name": "Set List Value",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        },
+        {
+          "name": "index",
+          "type": "integer",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "index: int"
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "value: object"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence, index: int, value: object",
+      "doc": "Sets the value of ``list`` specified by ``index`` to the given ``value``.\n\nIndex ``0`` means the first position, ``1`` the second and so on.\nSimilarly, ``-1`` is the last position, ``-2`` second last, and so on.\nUsing an index that does not exist on the list causes an error.\nThe index can be either an integer or a string that can be converted to\nan integer.\n\nStarting from Robot Framework 7.4, the modified list is also returned.\n\nExample:\n| Set List Value | ${L3} | 1  | xxx |\n| Set List Value | ${L3} | -1 | yyy |\n=>\n| ${L3} = ['a', 'xxx', 'yyy']\n\nStarting from Robot Framework 6.1, it is also possible to use the native\nitem assignment syntax. This is equivalent to the above:\n| ${L3}[1] =  | Set Variable | xxx |\n| ${L3}[-1] = | Set Variable | yyy |",
+      "short_doc": "Sets the value of ``list`` specified by ``index`` to the given ``value``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 115
+    },
+    {
+      "name": "Set To Dictionary",
+      "args": [
+        {
+          "name": "dictionary",
+          "type": "Mapping",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "dictionary: MutableMapping"
+        },
+        {
+          "name": "key_value_pairs",
+          "type": "object",
+          "default": null,
+          "required": false,
+          "kind": "VAR_POSITIONAL",
+          "repr": "*key_value_pairs: object"
+        },
+        {
+          "name": "items",
+          "type": "object",
+          "default": null,
+          "required": false,
+          "kind": "VAR_NAMED",
+          "repr": "**items: object"
+        }
+      ],
+      "arg_repr": "dictionary: MutableMapping, *key_value_pairs: object, **items: object",
+      "doc": "Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.\n\nIf given items already exist in the dictionary, their values are updated.\n\nThe modified dictionary is also returned.\n\nIt is easiest to specify items using the ``name=value`` syntax:\n| Set To Dictionary | ${D1} | key=value | second=${2} |\n=>\n| ${D1} = {'a': 1, 'key': 'value', 'second': 2}\n\nA limitation of the above syntax is that keys must be strings.\nThat can be avoided by passing keys and values as separate arguments:\n| Set To Dictionary | ${D1} | key | value | ${2} | value 2 |\n=>\n| ${D1} = {'a': 1, 'key': 'value', 2: 'value 2'}\n\nStarting from Robot Framework 6.1, it is also possible to use the native\nitem assignment syntax. This is equivalent to the above:\n| ${D1}[key] =  | Set Variable | value |\n| ${D1}[${2}] = | Set Variable | value 2 |",
+      "short_doc": "Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 582
+    },
+    {
+      "name": "Should Contain Match",
+      "args": [
+        {
+          "name": "list",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list: Sequence | Mapping | Set"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "pattern: str"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "case_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "case_insensitive: bool | None = None"
+        },
+        {
+          "name": "whitespace_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "whitespace_insensitive: bool | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        },
+        {
+          "name": "ignore_whitespace",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_whitespace: bool = False"
+        }
+      ],
+      "arg_repr": "list: Sequence | Mapping | Set, pattern: str, msg: str | None = None, case_insensitive: bool | None = None, whitespace_insensitive: bool | None = None, ignore_case: bool = False, ignore_whitespace: bool = False",
+      "doc": "Fails if ``pattern`` is not found in ``list``.\n\nBy default, pattern matching is similar to matching files in a shell\nand is case-sensitive and whitespace-sensitive. In the pattern syntax,\n``*`` matches to anything and ``?`` matches to any single character. You\ncan also prepend ``glob=`` to your pattern to explicitly use this pattern\nmatching behavior.\n\nIf you prepend ``regexp=`` to your pattern, your pattern will be used\naccording to the Python\n[http://docs.python.org/library/re.html|re module] regular expression\nsyntax. Notice that the backslash character often used with regular\nexpressions is an escape character in Robot Framework data and needs\nto be escaped with another backslash like ``regexp=\\\\d{6}``. See\n`BuiltIn.Should Match Regexp` for more details.\n\nMatching is case-sensitive by default, but that can be changed by giving\nthe ``ignore_case`` argument a true value.\nThis argument is new in Robot Framework 7.0, but with earlier versions\nit is possible to use ``case_insensitive`` for the same purpose.\n\nIt is possible to ignore all whitespace by giving the ``ignore_whitespace``\nargument a true value. This argument is new in Robot Framework 7.0 as well,\nand with earlier versions it is possible to use ``whitespace_insensitive``.\n\nNotice that both ``case_insensitive`` and ``whitespace_insensitive``\nare considered deprecated. They will eventually be removed.\n\nNon-string values in lists are ignored when matching patterns.\n\nUse the ``msg`` argument to override the default error message.\n\nExamples:\n| Should Contain Match | ${list} | a*              | | | # Match strings beginning with 'a'. |\n| Should Contain Match | ${list} | regexp=a.*      | | | # Same as the above but with regexp. |\n| Should Contain Match | ${list} | regexp=\\\\d{6} | | | # Match strings containing six digits. |\n| Should Contain Match | ${list} | a*  | ignore_case=True       | | # Match strings beginning with 'a' or 'A'. |\n| Should Contain Match | ${list} | ab* | ignore_whitespace=yes  | | # Match strings beginning with 'ab' with possible whitespace ignored. |\n| Should Contain Match | ${list} | ab* | ignore_whitespace=true | ignore_case=true | # Same as the above but also ignore case. |",
+      "short_doc": "Fails if ``pattern`` is not found in ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 1135
+    },
+    {
+      "name": "Should Not Contain Match",
+      "args": [
+        {
+          "name": "list",
+          "type": "Union",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list: Sequence | Mapping | Set"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "pattern: str"
+        },
+        {
+          "name": "msg",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "msg: str | None = None"
+        },
+        {
+          "name": "case_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "case_insensitive: bool | None = None"
+        },
+        {
+          "name": "whitespace_insensitive",
+          "type": "Union",
+          "default": "None",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "whitespace_insensitive: bool | None = None"
+        },
+        {
+          "name": "ignore_case",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_case: bool = False"
+        },
+        {
+          "name": "ignore_whitespace",
+          "type": "boolean",
+          "default": "False",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "ignore_whitespace: bool = False"
+        }
+      ],
+      "arg_repr": "list: Sequence | Mapping | Set, pattern: str, msg: str | None = None, case_insensitive: bool | None = None, whitespace_insensitive: bool | None = None, ignore_case: bool = False, ignore_whitespace: bool = False",
+      "doc": "Fails if ``pattern`` is found in ``list``.\n\nExact opposite of `Should Contain Match` keyword. See that keyword\nfor information about arguments and usage in general.",
+      "short_doc": "Fails if ``pattern`` is found in ``list``.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 1197
+    },
+    {
+      "name": "Sort List",
+      "args": [
+        {
+          "name": "list_",
+          "type": "Sequence",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "list_: MutableSequence"
+        }
+      ],
+      "arg_repr": "list_: MutableSequence",
+      "doc": "Sorts the given list in place.\n\nSorting fails if items in the list are not comparable with each others.\nFor example, sorting a list containing strings and numbers is not possible.\n\nNote that the given list is changed and nothing is returned. Use\n`Copy List` first, if you need to preserve the list also in the original\norder.\n\nStarting from Robot Framework 7.4, the sorted list is also returned.",
+      "short_doc": "Sorts the given list in place.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Collections.py",
+      "lineno": 349
+    }
+  ]
+}

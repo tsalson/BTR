@@ -1,0 +1,457 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bdd-ir.schema.json",
+  "title": "BDD Intermediate Representation",
+  "description": "Structured output of the bdd-ir-builder agent: parsed Gherkin AST with every step resolved to a Robot Framework keyword or flagged for generation.",
+  "type": "object",
+  "required": [
+    "source_file",
+    "feature",
+    "resource_imports",
+    "library_imports",
+    "unresolved_count",
+    "parse_errors",
+    "warnings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+
+    "source_file": {
+      "type": "string",
+      "description": "Relative path to the source .feature file from the project root.",
+      "pattern": "^bdd/features/[^/]+\\.feature$",
+      "examples": ["bdd/features/login.feature"]
+    },
+
+    "feature": {
+      "$ref": "#/$defs/Feature"
+    },
+
+    "resource_imports": {
+      "type": "array",
+      "description": "Deduplicated list of project resource files referenced by at least one resolved step.",
+      "items": {
+        "type": "string",
+        "pattern": "^robot/resources/keywords/.*\\.resource$"
+      },
+      "uniqueItems": true
+    },
+
+    "library_imports": {
+      "type": "array",
+      "description": "Deduplicated list of RF standard/third-party libraries referenced by at least one resolved step.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+
+    "unresolved_count": {
+      "type": "integer",
+      "description": "Total number of steps with resolution.status NEEDS_GENERATION or UNRESOLVED across all scenarios and the background.",
+      "minimum": 0
+    },
+
+    "parse_errors": {
+      "type": "array",
+      "description": "Structural errors encountered while parsing the feature file.",
+      "items": {
+        "$ref": "#/$defs/ParseError"
+      }
+    },
+
+    "warnings": {
+      "type": "array",
+      "description": "Non-fatal warnings raised during parsing or keyword resolution.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+
+  "$defs": {
+
+    "Feature": {
+      "type": "object",
+      "description": "Top-level Gherkin Feature block.",
+      "required": ["name", "description", "tags", "background", "scenarios"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Feature title as written in the .feature file.",
+          "minLength": 1
+        },
+        "description": {
+          "type": ["string", "null"],
+          "description": "Optional free-text description block that appears between the Feature line and the first keyword."
+        },
+        "tags": {
+          "$ref": "#/$defs/TagList",
+          "description": "Tags declared directly on the Feature keyword (@ prefix stripped)."
+        },
+        "background": {
+          "oneOf": [
+            { "$ref": "#/$defs/Background" },
+            { "type": "null" }
+          ],
+          "description": "Background section steps, or null if no Background is declared."
+        },
+        "scenarios": {
+          "type": "array",
+          "description": "Ordered list of Scenario and Scenario Outline blocks.",
+          "items": {
+            "$ref": "#/$defs/ScenarioOrOutline"
+          },
+          "minItems": 1
+        }
+      }
+    },
+
+    "Background": {
+      "type": "object",
+      "description": "Background section containing steps that run before every scenario.",
+      "required": ["steps"],
+      "additionalProperties": false,
+      "properties": {
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Step" },
+          "minItems": 1
+        }
+      }
+    },
+
+    "ScenarioOrOutline": {
+      "oneOf": [
+        { "$ref": "#/$defs/Scenario" },
+        { "$ref": "#/$defs/ScenarioOutline" }
+      ],
+      "discriminator": {
+        "propertyName": "type"
+      }
+    },
+
+    "Scenario": {
+      "type": "object",
+      "description": "A plain Gherkin Scenario.",
+      "required": ["type", "name", "tags", "line", "steps"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Scenario"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "$ref": "#/$defs/TagList",
+          "description": "Merged feature-level and scenario-level tags (deduplicated, @ prefix stripped)."
+        },
+        "line": {
+          "$ref": "#/$defs/LineNumber"
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Step" },
+          "minItems": 1
+        }
+      }
+    },
+
+    "ScenarioOutline": {
+      "type": "object",
+      "description": "A parameterised Gherkin Scenario Outline with one or more Examples tables.",
+      "required": ["type", "name", "tags", "line", "steps", "examples"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Scenario Outline"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "$ref": "#/$defs/TagList"
+        },
+        "line": {
+          "$ref": "#/$defs/LineNumber"
+        },
+        "steps": {
+          "type": "array",
+          "description": "Steps with <placeholder> tokens preserved un-expanded.",
+          "items": { "$ref": "#/$defs/Step" },
+          "minItems": 1
+        },
+        "examples": {
+          "type": "array",
+          "description": "One or more Examples tables. Rows are NOT expanded — that is suite-builder's responsibility.",
+          "items": { "$ref": "#/$defs/ExamplesTable" },
+          "minItems": 1
+        }
+      }
+    },
+
+    "ExamplesTable": {
+      "type": "object",
+      "description": "A single Examples block within a Scenario Outline.",
+      "required": ["headers", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "headers": {
+          "type": "array",
+          "description": "Column header names in declaration order.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "rows": {
+          "type": "array",
+          "description": "Data rows. Each row is an ordered array of string values matching the headers array length.",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+
+    "Step": {
+      "type": "object",
+      "description": "A single Gherkin step with its keyword resolution result.",
+      "required": [
+        "keyword",
+        "effective_keyword",
+        "text",
+        "line",
+        "status",
+        "resolution"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "description": "The literal keyword as written in the feature file.",
+          "enum": ["Given", "When", "Then", "And", "But", "*"]
+        },
+        "effective_keyword": {
+          "type": "string",
+          "description": "Inferred semantic keyword after normalising And / But / * steps.",
+          "enum": ["Given", "When", "Then"]
+        },
+        "text": {
+          "type": "string",
+          "description": "Step text with leading/trailing whitespace stripped. Placeholder tokens (e.g. <username>) are preserved verbatim.",
+          "minLength": 1
+        },
+        "line": {
+          "$ref": "#/$defs/LineNumber"
+        },
+        "status": {
+          "type": "string",
+          "description": "Processing status assigned by the parser phase.",
+          "enum": ["PARSED", "UNRESOLVED"]
+        },
+        "resolution": {
+          "$ref": "#/$defs/Resolution"
+        }
+      }
+    },
+
+    "Resolution": {
+      "description": "Result of the keyword-resolution phase for a single step.",
+      "oneOf": [
+        { "$ref": "#/$defs/ResolutionResolvedProject" },
+        { "$ref": "#/$defs/ResolutionResolvedGenerated" },
+        { "$ref": "#/$defs/ResolutionResolvedLibrary" },
+        { "$ref": "#/$defs/ResolutionNeedsGeneration" },
+        { "$ref": "#/$defs/ResolutionUnresolved" }
+      ],
+      "discriminator": {
+        "propertyName": "status"
+      }
+    },
+
+    "ResolutionBase": {
+      "type": "object",
+      "description": "Fields common to all resolution variants.",
+      "required": ["status", "keyword_name", "source_file", "arguments", "argument_pattern"],
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "keyword_name": {
+          "type": "string",
+          "description": "Title Case Robot Framework keyword name.",
+          "minLength": 1
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Path to the resource file or library name that owns this keyword.",
+          "minLength": 1
+        },
+        "arguments": {
+          "type": "array",
+          "description": "Ordered list of argument values or variable references to pass to the keyword.",
+          "items": { "type": "string" }
+        },
+        "argument_pattern": {
+          "type": "string",
+          "description": "Space-separated human-readable description of the keyword's parameter signature."
+        }
+      }
+    },
+
+    "ResolutionResolvedProject": {
+      "allOf": [
+        { "$ref": "#/$defs/ResolutionBase" },
+        {
+          "type": "object",
+          "description": "Keyword found in a non-generated project resource file.",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "const": "RESOLVED_PROJECT" },
+            "source_file": {
+              "type": "string",
+              "pattern": "^robot/resources/keywords/(?!generated/).+\\.resource$"
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+
+    "ResolutionResolvedGenerated": {
+      "allOf": [
+        { "$ref": "#/$defs/ResolutionBase" },
+        {
+          "type": "object",
+          "description": "Keyword found in the generated resource directory.",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "const": "RESOLVED_GENERATED" },
+            "source_file": {
+              "type": "string",
+              "pattern": "^robot/resources/keywords/generated/.+\\.resource$"
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+
+    "ResolutionResolvedLibrary": {
+      "allOf": [
+        { "$ref": "#/$defs/ResolutionBase" },
+        {
+          "type": "object",
+          "description": "Keyword found in an RF standard or third-party library.",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "const": "RESOLVED_LIBRARY" }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+
+    "ResolutionNeedsGeneration": {
+      "allOf": [
+        { "$ref": "#/$defs/ResolutionBase" },
+        {
+          "type": "object",
+          "description": "No matching keyword was found; a new keyword must be generated.",
+          "required": ["status", "generation_hint"],
+          "properties": {
+            "status": { "type": "string", "const": "NEEDS_GENERATION" },
+            "source_file": {
+              "type": "string",
+              "pattern": "^robot/resources/keywords/generated/[a-z0-9_]+_keywords\\.resource$",
+              "description": "Target generated resource file (snake_case feature name)."
+            },
+            "arguments": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^\\$\\{[A-Z][A-Z0-9_]*\\}$",
+                "description": "RF variable in ${SCREAMING_SNAKE_CASE} format."
+              }
+            },
+            "generation_hint": {
+              "type": "string",
+              "description": "One-to-two sentence plain-English description of what the generated keyword should do.",
+              "minLength": 10
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+
+    "ResolutionUnresolved": {
+      "type": "object",
+      "description": "Step carried UNRESOLVED status from the parse phase; resolution was skipped.",
+      "required": ["status"],
+      "additionalProperties": false,
+      "properties": {
+        "status": { "type": "string", "const": "UNRESOLVED" }
+      }
+    },
+
+    "TagList": {
+      "type": "array",
+      "description": "List of Gherkin tags with the @ prefix stripped.",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[^@]"
+      },
+      "uniqueItems": true
+    },
+
+    "LineNumber": {
+      "type": "integer",
+      "description": "1-based line number in the source .feature file.",
+      "minimum": 1
+    },
+
+    "ParseError": {
+      "type": "object",
+      "description": "A structural error encountered while parsing the feature file.",
+      "required": ["message"],
+      "additionalProperties": false,
+      "properties": {
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "oneOf": [
+            { "$ref": "#/$defs/LineNumber" },
+            { "type": "null" }
+          ],
+          "description": "Line at which the error occurred, or null if not locatable."
+        },
+        "column": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "null" }
+          ],
+          "description": "Column at which the error occurred, or null if not locatable."
+        }
+      }
+    }
+
+  }
+}

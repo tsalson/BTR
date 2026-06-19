@@ -1,0 +1,78 @@
+{
+  "name": "Screenshot",
+  "kind": "stdlib",
+  "version": "7.4.2",
+  "type": "LIBRARY",
+  "scope": "SUITE",
+  "source_doc": "Library for taking screenshots on the machine where tests are executed.\n\nTaking the actual screenshot requires a suitable tool or module that may\nneed to be installed separately. Taking screenshots also requires tests\nto be run with a physical or virtual display.\n\n== Table of contents ==\n\n- `Supported screenshot taking tools and modules`\n- `Where screenshots are saved`\n- `ScreenCapLibrary`\n- `Importing`\n- `Keywords`\n\n= Supported screenshot taking tools and modules =\n\nHow screenshots are taken depends on the operating system. On OSX\nscreenshots are taken using the built-in ``screencapture`` utility. On\nother operating systems you need to have one of the following tools or\nPython modules installed. You can specify the tool/module to use when\n`importing` the library. If no tool or module is specified, the first\none found will be used.\n\n- wxPython :: http://wxpython.org :: Generic Python GUI toolkit.\n- PyGTK :: http://pygtk.org :: This module is available by default on most\n  Linux distributions.\n- Pillow :: http://python-pillow.github.io ::\n  Only works on Windows. Also the original PIL package is supported.\n- Scrot :: http://en.wikipedia.org/wiki/Scrot :: Not used on Windows.\n  Install with ``apt-get install scrot`` or similar.\n\n= Where screenshots are saved =\n\nBy default screenshots are saved into the same directory where the Robot\nFramework log file is written. If no log is created, screenshots are saved\ninto the directory where the XML output file is written.\n\nIt is possible to specify a custom location for screenshots using\n``screenshot_directory`` argument when `importing` the library and\nusing `Set Screenshot Directory` keyword during execution. It is also\npossible to save screenshots using an absolute path.\n\n= ScreenCapLibrary =\n\n[https://github.com/mihaiparvu/ScreenCapLibrary|ScreenCapLibrary] is an\nexternal Robot Framework library that can be used as an alternative,\nwhich additionally provides support for multiple formats, adjusting the\nquality, using GIFs and video capturing.",
+  "keywords": [
+    {
+      "name": "Set Screenshot Directory",
+      "args": [
+        {
+          "name": "path",
+          "type": "Path",
+          "default": null,
+          "required": true,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "path: Path"
+        }
+      ],
+      "arg_repr": "path: Path",
+      "doc": "Sets the directory where screenshots are saved.\n\nIt is possible to use ``/`` as a path separator in all operating\nsystems. Path to the old directory is returned.\n\nThe directory can also be set in `importing`.",
+      "short_doc": "Sets the directory where screenshots are saved.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Screenshot.py",
+      "lineno": 130
+    },
+    {
+      "name": "Take Screenshot",
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "default": "screenshot",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "name: str = screenshot"
+        },
+        {
+          "name": "width",
+          "type": "string",
+          "default": "800px",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "width: str = 800px"
+        }
+      ],
+      "arg_repr": "name: str = screenshot, width: str = 800px",
+      "doc": "Takes a screenshot in JPEG format and embeds it into the log file.\n\nName of the file where the screenshot is stored is derived from the\ngiven ``name``. If the ``name`` ends with extension ``.jpg`` or\n``.jpeg``, the screenshot will be stored with that exact name.\nOtherwise a unique name is created by adding an underscore, a running\nindex and an extension to the ``name``.\n\nThe name will be interpreted to be relative to the directory where\nthe log file is written. It is also possible to use absolute paths.\nUsing ``/`` as a path separator works in all operating systems.\n\n``width`` specifies the size of the screenshot in the log file.\n\nExamples: (LOGDIR is determined automatically by the library)\n| Take Screenshot |                  |     | # LOGDIR/screenshot_1.jpg (index automatically incremented) |\n| Take Screenshot | mypic            |     | # LOGDIR/mypic_1.jpg (index automatically incremented) |\n| Take Screenshot | ${TEMPDIR}/mypic |     | # /tmp/mypic_1.jpg (index automatically incremented) |\n| Take Screenshot | pic.jpg          |     | # LOGDIR/pic.jpg (always uses this file) |\n| Take Screenshot | images/login.jpg | 80% | # Specify both name and width. |\n| Take Screenshot | width=550px      |     | # Specify only width. |\n\nThe path where the screenshot is saved is returned.",
+      "short_doc": "Takes a screenshot in JPEG format and embeds it into the log file.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Screenshot.py",
+      "lineno": 145
+    },
+    {
+      "name": "Take Screenshot Without Embedding",
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "default": "screenshot",
+          "required": false,
+          "kind": "POSITIONAL_OR_NAMED",
+          "repr": "name: str = screenshot"
+        }
+      ],
+      "arg_repr": "name: str = screenshot",
+      "doc": "Takes a screenshot and links it from the log file.\n\nThis keyword is otherwise identical to `Take Screenshot` but the saved\nscreenshot is not embedded into the log file. The screenshot is linked\nso it is nevertheless easily available.",
+      "short_doc": "Takes a screenshot and links it from the log file.",
+      "tags": [],
+      "deprecated": false,
+      "source": "/mnt/c/Users/tsalson/OneDrive - Sopra Steria/Documents/stage/Code/prod/BTR/.venv/lib/python3.14/site-packages/robot/libraries/Screenshot.py",
+      "lineno": 174
+    }
+  ]
+}

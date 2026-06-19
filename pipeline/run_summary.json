@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-06-19T09:26:58.013482+00:00",
+  "feature_files": [
+    {
+      "file": "bdd/features/mode_1.feature",
+      "feature_name": "Mode 1: Excessive Rate of Descent",
+      "ir_path": "bdd/ir/mode_1-ir.json",
+      "suite_path": "robot/suites/mode_1_suite.robot",
+      "resource_path": "robot/resources/keywords/generated/mode_1_keywords.resource",
+      "status": "success",
+      "unresolved_count": 117,
+      "robocop_clean": true,
+      "errors": []
+    }
+  ],
+  "summary": {
+    "total_files": 1,
+    "successful_features": 1,
+    "failed_features": 0,
+    "total_unresolved_keywords": 117,
+    "all_robocop_clean": true
+  }
+}
