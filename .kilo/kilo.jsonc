@@ -1,5 +1,33 @@
 {
   "$schema": "https://app.kilo.ai/config.json",
+  "provider": {
+    "iaka-reflexion": {
+      "name": "iaka-reflexion",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "apiKey": "REMOVED",
+        "baseURL": "https://iaka-api.apps.ocp4.on-prem.innershift.ssghosting.net/qwen-3.6-35b/v1"
+      },
+      "models": {
+        "qwen-3.6-35b": {
+          "name": "Qwen 3.6"
+        }
+      }
+    },
+    "iaka-code": {
+      "name": "iaka-code",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "apiKey": "REMOVED",
+        "baseURL": "https://iaka-api.apps.ocp4.on-prem.innershift.ssghosting.net/qwen3-coder-30b/v1"
+      },
+      "models": {
+        "qwen3-coder-30b": {
+          "name": "Qwen 3 coder"
+        }
+      }
+    }
+  },
   "mcp": {
     "gherkin-mcp": {
       "type": "local",

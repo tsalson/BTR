@@ -30,6 +30,7 @@ Robot Framework Test Suites (.robot files)
 - Kilo Code CLI installed and configured
 - MCP servers configured in `.kilo/kilo.jsonc` (already done)
 - Feature files in `bdd/features/`
+- uv sync
 
 ### 2. Run the Pipeline
 

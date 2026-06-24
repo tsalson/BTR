@@ -2,7 +2,7 @@
   "source_file": "bdd/features/sample.feature",
   "feature": {
     "name": "User Login",
-    "description": "As a user\n    I want to log in to the system\n    So that I can access my account",
+    "description": "    As a user\n    I want to log in to the system\n    So that I can access my account",
     "tags": [],
     "background": null,
     "scenarios": [
@@ -22,12 +22,11 @@
             "line": 8,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
-              "keyword_name": "Navigate To Login Page",
+              "status": "RESOLVED_GENERATED",
+              "keyword_name": "Open Login Page",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": "",
-              "generation_hint": "Navigate to the application login page so that the user can begin the authentication flow."
+              "argument_pattern": ""
             }
           },
           {
@@ -37,14 +36,11 @@
             "line": 9,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Username",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [
-                "${VALID_USERNAME}"
-              ],
-              "argument_pattern": "username",
-              "generation_hint": "Fill the username field with the provided value representing a valid account username."
+              "arguments": [],
+              "argument_pattern": "username"
             }
           },
           {
@@ -54,14 +50,11 @@
             "line": 10,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Password",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [
-                "${VALID_PASSWORD}"
-              ],
-              "argument_pattern": "password",
-              "generation_hint": "Fill the password field with the provided value representing a valid account password."
+              "arguments": [],
+              "argument_pattern": "password"
             }
           },
           {
@@ -71,12 +64,11 @@
             "line": 11,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Click Login Button",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": "",
-              "generation_hint": "Click the login form submit button to submit the provided credentials for authentication."
+              "argument_pattern": ""
             }
           },
           {
@@ -86,12 +78,11 @@
             "line": 12,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Verify Dashboard Is Displayed",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": "",
-              "generation_hint": "Verify that the post-login dashboard page is displayed, confirming successful authentication."
+              "argument_pattern": ""
             }
           },
           {
@@ -101,12 +92,11 @@
             "line": 13,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
-              "keyword_name": "Verify Welcome Message Is Displayed",
+              "status": "RESOLVED_GENERATED",
+              "keyword_name": "Verify Welcome Message Is Visible",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": "",
-              "generation_hint": "Verify that a welcome notification or greeting message is visible on the dashboard after login."
+              "argument_pattern": ""
             }
           }
         ]
@@ -114,10 +104,7 @@
       {
         "type": "Scenario Outline",
         "name": "Invalid login attempts",
-        "tags": [
-          "smoke",
-          "authentication"
-        ],
+        "tags": [],
         "line": 15,
         "steps": [
           {
@@ -127,12 +114,11 @@
             "line": 16,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
-              "keyword_name": "Navigate To Login Page",
+              "status": "RESOLVED_GENERATED",
+              "keyword_name": "Open Login Page",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": "",
-              "generation_hint": "Navigate to the application login page so that the user can begin the authentication flow."
+              "argument_pattern": ""
             }
           },
           {
@@ -142,14 +128,11 @@
             "line": 17,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Username",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [
-                "${USERNAME}"
-              ],
-              "argument_pattern": "username",
-              "generation_hint": "Fill the username field with the provided value (may be invalid, empty, or valid) from the Examples table."
+              "arguments": [],
+              "argument_pattern": "username"
             }
           },
           {
@@ -159,14 +142,11 @@
             "line": 18,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Password",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [
-                "${PASSWORD}"
-              ],
-              "argument_pattern": "password",
-              "generation_hint": "Fill the password field with the provided value (may be invalid, empty, or valid) from the Examples table."
+              "arguments": [],
+              "argument_pattern": "password"
             }
           },
           {
@@ -176,12 +156,11 @@
             "line": 19,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Click Login Button",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": "",
-              "generation_hint": "Click the login form submit button to submit the provided credentials for authentication."
+              "argument_pattern": ""
             }
           },
           {
@@ -191,14 +170,11 @@
             "line": 20,
             "status": "PARSED",
             "resolution": {
-              "status": "NEEDS_GENERATION",
+              "status": "RESOLVED_GENERATED",
               "keyword_name": "Verify Error Message Is Displayed",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [
-                "${EXPECTED_ERROR_MESSAGE}"
-              ],
-              "argument_pattern": "expected_error",
-              "generation_hint": "Verify that the login form displays an error message matching the expected error text from the Examples table."
+              "arguments": [],
+              "argument_pattern": "expected_error"
             }
           }
         ],
@@ -231,9 +207,11 @@
       }
     ]
   },
-  "resource_imports": [],
+  "resource_imports": [
+    "robot/resources/keywords/generated/sample_keywords.resource"
+  ],
   "library_imports": [],
-  "unresolved_count": 11,
+  "unresolved_count": 0,
   "parse_errors": [],
   "warnings": []
 }

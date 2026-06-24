@@ -130,7 +130,7 @@ You may call **only** the following MCP tools:
 
 Robocop validation is performed by a separate `robocop-validator` agent. The `suite-builder` must only generate the `.robot` and `.resource` artefacts and ensure they conform to the output contract and structural rules above. Do not call or run Robocop here; instead return the generated file paths to the orchestrator which will invoke `robocop-validator`.
 
-### 5.10 Output Integrity Self-Check
+### 5.9 Output Integrity Self-Check
 
 Before calling Robocop for the first time, verify:
 - Every entry in `resource_imports[]` from the IR is listed in `*** Settings ***`.
@@ -145,12 +145,7 @@ Before calling Robocop for the first time, verify:
 
 After a **clean** Robocop run :
 
-- Delegate to the orchestrator (return to the pipeline) with the paths to the generated suite file and the resource file (if any).
-- No further agent delegation is required from suite-builder; it is the terminal agent in the normal pipeline flow.
-
-If the Robocop loop is **exhausted without a clean result** (run 3 still has errors):
-
-- Do **not** delegate. Write the final robocop errors returning the report to the orchestrator for human review.
+- Delegate to the robocop validator with the paths to the generated suite file and the resource file (if any).
 
 ---
 

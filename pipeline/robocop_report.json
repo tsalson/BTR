@@ -2,258 +2,45 @@
   "clean": false,
   "files": [
     {
-      "path": "robot/suites/mode_1_suite.robot",
+      "path": "robot/suites/sample_suite.robot",
+      "errors": 0,
+      "warnings": 8,
       "issues": [
         {
-          "severity": "W",
           "rule_id": "COM01",
+          "severity": "WARNING",
           "description": "Found a marker 'TODO' in the comments",
-          "line": 10,
-          "column": 35,
-          "end_line": 10,
-          "end_column": 39,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 11,
-          "column": 35,
-          "end_line": 11,
-          "end_column": 39,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 12,
-          "column": 35,
-          "end_line": 12,
-          "end_column": 39,
-          "fixable_by_formatting": false
+          "line": 31,
+          "column": 31,
+          "end_line": 35,
+          "end_column": 35
         }
       ],
-      "error_count": 0,
-      "warning_count": 77
+      "issue_description": "8 COM01 warnings for TODO markers in comments (lines 31-35). Formatter cannot resolve these; manual removal or Robocop configuration change required."
     },
     {
-      "path": "robot/resources/keywords/generated/mode_1_keywords.resource",
+      "path": "robot/resources/keywords/generated/sample_keywords.resource",
+      "errors": 0,
+      "warnings": 10,
       "issues": [
         {
-          "severity": "W",
           "rule_id": "COM01",
+          "severity": "WARNING",
           "description": "Found a marker 'TODO' in the comments",
-          "line": 9,
-          "column": 5,
-          "end_line": 9,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 15,
-          "column": 5,
-          "end_line": 15,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 21,
-          "column": 5,
-          "end_line": 21,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 27,
-          "column": 5,
-          "end_line": 27,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 33,
-          "column": 5,
-          "end_line": 33,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 39,
-          "column": 5,
-          "end_line": 39,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 45,
-          "column": 5,
-          "end_line": 45,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 51,
-          "column": 5,
-          "end_line": 51,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 57,
-          "column": 5,
-          "end_line": 57,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 63,
-          "column": 5,
-          "end_line": 63,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 69,
-          "column": 5,
-          "end_line": 69,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 75,
-          "column": 5,
-          "end_line": 75,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 81,
-          "column": 5,
-          "end_line": 81,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 87,
-          "column": 5,
-          "end_line": 87,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 93,
-          "column": 5,
-          "end_line": 93,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 99,
-          "column": 5,
-          "end_line": 99,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 105,
-          "column": 5,
-          "end_line": 105,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 111,
-          "column": 5,
-          "end_line": 111,
-          "end_column": 8,
-          "fixable_by_formatting": false
-        },
-        {
-          "severity": "W",
-          "rule_id": "COM01",
-          "description": "Found a marker 'TODO' in the comments",
-          "line": 117,
-          "column": 5,
-          "end_line": 117,
-          "end_column": 8,
-          "fixable_by_formatting": false
+          "line": 7,
+          "column": 7,
+          "end_line": 11,
+          "end_column": 11
         }
       ],
-      "error_count": 0,
-      "warning_count": 34
+      "issue_description": "10 COM01 warnings for TODO markers in comments (lines 7-11). Formatter cannot resolve these; manual removal or Robocop configuration change required."
     }
   ],
   "summary": {
     "total_files": 2,
     "total_errors": 0,
-    "total_warnings": 111,
+    "total_warnings": 18,
     "cycles_run": 3,
-    "format_cycles": 2,
-    "final_clean_status": false
-  },
-  "notes": [
-    {
-      "rule": "COM01",
-      "description": "mode_1_suite.robot: TODO markers in comments on variable declaration lines 10, 11, 12 (${AURAL_MESSAGE}, ${HEIGHT}, ${RATEOFDESCENT}). mode_1_keywords.resource: TODO markers in comments on lines 9, 15, 21, 27, 33, 39, 45, 51, 57, 63, 69, 75, 81, 87, 93, 99, 105, 111, 117 (and 6 more) within generated keyword stubs.",
-      "remediation": "Replace or remove 'TODO: set value' and 'TODO: Implement - generated stub' comments, or configure Robocop to suppress COM01 via '--configure todo-in-comment.markers='. This is a style warning and does not affect test execution. The 13 generated keywords that use 'Fail' to indicate unimplemented stubs are a separate design concern — the TODO comments are cosmetic."
-    },
-    {
-      "rule": "TRUNCATED",
-      "description": "The Robocop MCP tool reports 74 additional violations for mode_1_suite.robot (total 77 warnings, 0 errors) and 15 additional violations for mode_1_keywords.resource (total 34 warnings, 0 errors). Only the first 20 violations per rule type are shown by the MCP tool. The displayed issues are all COM01 (TODO markers). Remaining violations are of unknown types due to MCP truncation.",
-      "remediation": "Review the raw Robocop CLI output directly for the complete list of remaining warnings. No errors (E) were detected across either file. Formatting was applied in 2 cycles (cycles 2 and 3); no further formatting changes were possible."
-    }
-  ]
+    "resolution": "WARNINGS_PERSIST"
+  }
 }

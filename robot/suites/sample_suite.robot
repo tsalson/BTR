@@ -2,43 +2,43 @@
 Metadata    generated_by    bdd-to-robot-pipeline
 Metadata    source_feature    bdd/features/sample.feature
 
-Resource    ../resources/keywords/generated/sample_keywords.resource
+Resource    robot/resources/keywords/generated/sample_keywords.resource
 
 
 *** Variables ***
-${VALID_USERNAME}       ${EMPTY}    # TODO: set value
-${VALID_PASSWORD}       ${EMPTY}    # TODO: set value
+${USERNAME}     ${EMPTY}    # TODO: set value
+${PASSWORD}     ${EMPTY}    # TODO: set value
 
 
 *** Test Cases ***
 Valid Login
-    [Tags]    smoke    authentication    generated
-    Navigate To Login Page
-    Enter Username    ${VALID_USERNAME}
-    Enter Password    ${VALID_PASSWORD}
+    [Tags]    generated
+    Open Login Page
+    Enter Username    ${USERNAME}
+    Enter Password    ${PASSWORD}
     Click Login Button
     Verify Dashboard Is Displayed
-    Verify Welcome Message Is Displayed
+    Verify Welcome Message Is Visible
 
-Invalid Login Attempts — admin
-    [Tags]    smoke    authentication    generated
-    Navigate To Login Page
+Invalid Login Attempts — admin (1)
+    [Tags]    generated
+    Open Login Page
     Enter Username    admin
     Enter Password    wrong
     Click Login Button
     Verify Error Message Is Displayed    Invalid credentials
 
-Invalid Login Attempts —
-    [Tags]    smoke    authentication    generated
-    Navigate To Login Page
+Invalid Login Attempts —    [Tags]    generated
+    (2)
+    Open Login Page
     Enter Username
     Enter Password    secret
     Click Login Button
     Verify Error Message Is Displayed    Username required
 
-Invalid Login Attempts — admin
-    [Tags]    smoke    authentication    generated
-    Navigate To Login Page
+Invalid Login Attempts — admin (3)
+    [Tags]    generated
+    Open Login Page
     Enter Username    admin
     Enter Password
     Click Login Button
