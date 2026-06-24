@@ -5,7 +5,7 @@
       "name": "iaka-reflexion",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "apiKey": "",
+        "apiKey": "REMOVED",
         "baseURL": "https://iaka-api.apps.ocp4.on-prem.innershift.ssghosting.net/qwen-3.6-35b/v1"
       },
       "models": {
@@ -18,7 +18,7 @@
       "name": "iaka-code",
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "apiKey": "",
+        "apiKey": "REMOVED",
         "baseURL": "https://iaka-api.apps.ocp4.on-prem.innershift.ssghosting.net/qwen3-coder-30b/v1"
       },
       "models": {
