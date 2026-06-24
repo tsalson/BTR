@@ -2,7 +2,7 @@
   "source_file": "bdd/features/sample.feature",
   "feature": {
     "name": "User Login",
-    "description": "    As a user\n    I want to log in to the system\n    So that I can access my account",
+    "description": "As a user\nI want to log in to the system\nSo that I can access my account",
     "tags": [],
     "background": null,
     "scenarios": [
@@ -10,8 +10,8 @@
         "type": "Scenario",
         "name": "Valid login",
         "tags": [
-          "smoke",
-          "authentication"
+          "authentication",
+          "smoke"
         ],
         "line": 7,
         "steps": [
@@ -39,7 +39,9 @@
               "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Username",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [],
+              "arguments": [
+                "${VALID_USERNAME}"
+              ],
               "argument_pattern": "username"
             }
           },
@@ -53,7 +55,9 @@
               "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Password",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [],
+              "arguments": [
+                "${VALID_PASSWORD}"
+              ],
               "argument_pattern": "password"
             }
           },
@@ -131,7 +135,9 @@
               "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Username",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [],
+              "arguments": [
+                "${USERNAME}"
+              ],
               "argument_pattern": "username"
             }
           },
@@ -145,7 +151,9 @@
               "status": "RESOLVED_GENERATED",
               "keyword_name": "Enter Password",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [],
+              "arguments": [
+                "${PASSWORD}"
+              ],
               "argument_pattern": "password"
             }
           },
@@ -173,7 +181,9 @@
               "status": "RESOLVED_GENERATED",
               "keyword_name": "Verify Error Message Is Displayed",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
-              "arguments": [],
+              "arguments": [
+                "${EXPECTED_ERROR}"
+              ],
               "argument_pattern": "expected_error"
             }
           }

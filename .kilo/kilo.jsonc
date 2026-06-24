@@ -3,9 +3,8 @@
   "provider": {
     "iaka-reflexion": {
       "name": "iaka-reflexion",
-      "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "apiKey": "",
+        "apiKey": "{env:IAKA_API_KEY}",
         "baseURL": "https://iaka-api.apps.ocp4.on-prem.innershift.ssghosting.net/qwen-3.6-35b/v1"
       },
       "models": {
@@ -16,9 +15,8 @@
     },
     "iaka-code": {
       "name": "iaka-code",
-      "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "apiKey": "",
+        "apiKey": "{env:IAKA_API_KEY}",
         "baseURL": "https://iaka-api.apps.ocp4.on-prem.innershift.ssghosting.net/qwen3-coder-30b/v1"
       },
       "models": {
