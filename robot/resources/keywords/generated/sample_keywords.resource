@@ -4,47 +4,47 @@ Documentation       Auto-generated keyword stubs for User Login.
 
 
 *** Keywords ***
-Open Login Page
-    [Documentation]    Navigate to and display the application login page, ready for the user to enter credentials.
-    # TODO: Implement — generated stub
-    Log    Executing: Open Login Page    level=DEBUG
-    Fail    msg=NOT IMPLEMENTED: Open Login Page
-
-Enter Username
-    [Documentation]    Fill the username field on the login page with the provided username value.
-    [Arguments]    ${USERNAME}
-    # TODO: Implement — generated stub
-    Log    Executing: Enter Username    level=DEBUG
-    Fail    msg=NOT IMPLEMENTED: Enter Username
-
-Enter Password
-    [Documentation]    Fill the password field on the login page with the provided password value.
-    [Arguments]    ${PASSWORD}
-    # TODO: Implement — generated stub
-    Log    Executing: Enter Password    level=DEBUG
-    Fail    msg=NOT IMPLEMENTED: Enter Password
-
 Click Login Button
-    [Documentation]    Click the login button on the login page to submit the entered credentials.
-    # TODO: Implement — generated stub
+    [Documentation]    Click the login button to submit the entered credentials.
+    # TODO: Implement - generated stub
     Log    Executing: Click Login Button    level=DEBUG
     Fail    msg=NOT IMPLEMENTED: Click Login Button
 
+Enter Password
+    [Documentation]    Enter the specified password value into the login page password field.
+    [Arguments]    ${PASSWORD}
+    # TODO: Implement - generated stub
+    Log    Executing: Enter Password    level=DEBUG
+    Fail    msg=NOT IMPLEMENTED: Enter Password
+
+Enter Username
+    [Documentation]    Enter the specified username value into the login page username field.
+    [Arguments]    ${USERNAME}
+    # TODO: Implement - generated stub
+    Log    Executing: Enter Username    level=DEBUG
+    Fail    msg=NOT IMPLEMENTED: Enter Username
+
+Go To Login Page
+    [Documentation]    Navigate to the application login page so that credentials can be entered.
+    # TODO: Implement - generated stub
+    Log    Executing: Go To Login Page    level=DEBUG
+    Fail    msg=NOT IMPLEMENTED: Go To Login Page
+
 Verify Dashboard Is Displayed
-    [Documentation]    Assert that the user has been successfully redirected to the dashboard page after login.
-    # TODO: Implement — generated stub
+    [Documentation]    Verify that the dashboard page is displayed after successful login.
+    # TODO: Implement - generated stub
     Log    Executing: Verify Dashboard Is Displayed    level=DEBUG
     Fail    msg=NOT IMPLEMENTED: Verify Dashboard Is Displayed
 
-Verify Welcome Message Is Visible
-    [Documentation]    Assert that a welcome message element is visible on the dashboard page.
-    # TODO: Implement — generated stub
-    Log    Executing: Verify Welcome Message Is Visible    level=DEBUG
-    Fail    msg=NOT IMPLEMENTED: Verify Welcome Message Is Visible
-
 Verify Error Message Is Displayed
-    [Documentation]    Assert that an error message is displayed on the login page with the provided error text.
+    [Documentation]    Verify that the specified error message is displayed on the login page after an invalid login attempt.
     [Arguments]    ${EXPECTED_ERROR}
-    # TODO: Implement — generated stub
+    # TODO: Implement - generated stub
     Log    Executing: Verify Error Message Is Displayed    level=DEBUG
     Fail    msg=NOT IMPLEMENTED: Verify Error Message Is Displayed
+
+Verify Welcome Message Is Displayed
+    [Documentation]    Verify that a welcome message is displayed on the dashboard after login.
+    # TODO: Implement - generated stub
+    Log    Executing: Verify Welcome Message Is Displayed    level=DEBUG
+    Fail    msg=NOT IMPLEMENTED: Verify Welcome Message Is Displayed

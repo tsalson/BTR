@@ -10,8 +10,8 @@
         "type": "Scenario",
         "name": "Valid login",
         "tags": [
-          "authentication",
-          "smoke"
+          "smoke",
+          "authentication"
         ],
         "line": 7,
         "steps": [
@@ -22,11 +22,12 @@
             "line": 8,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
-              "keyword_name": "Open Login Page",
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Go To Login Page",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": ""
+              "argument_pattern": "",
+              "generation_hint": "Navigate to the application login page so that credentials can be entered."
             }
           },
           {
@@ -36,13 +37,14 @@
             "line": 9,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Enter Username",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [
-                "${VALID_USERNAME}"
+                "${ADMIN_USERNAME}"
               ],
-              "argument_pattern": "username"
+              "argument_pattern": "username",
+              "generation_hint": "Enter the specified username value into the login page username field."
             }
           },
           {
@@ -52,13 +54,14 @@
             "line": 10,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Enter Password",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [
-                "${VALID_PASSWORD}"
+                "${SECRET_PASSWORD}"
               ],
-              "argument_pattern": "password"
+              "argument_pattern": "password",
+              "generation_hint": "Enter the specified password value into the login page password field."
             }
           },
           {
@@ -68,11 +71,12 @@
             "line": 11,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Click Login Button",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": ""
+              "argument_pattern": "",
+              "generation_hint": "Click the login button to submit the entered credentials."
             }
           },
           {
@@ -82,11 +86,12 @@
             "line": 12,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Verify Dashboard Is Displayed",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": ""
+              "argument_pattern": "",
+              "generation_hint": "Verify that the dashboard page is displayed after successful login."
             }
           },
           {
@@ -96,11 +101,12 @@
             "line": 13,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
-              "keyword_name": "Verify Welcome Message Is Visible",
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Welcome Message Is Displayed",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": ""
+              "argument_pattern": "",
+              "generation_hint": "Verify that a welcome message is displayed on the dashboard after login."
             }
           }
         ]
@@ -118,11 +124,12 @@
             "line": 16,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
-              "keyword_name": "Open Login Page",
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Go To Login Page",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": ""
+              "argument_pattern": "",
+              "generation_hint": "Navigate to the application login page so that credentials can be entered."
             }
           },
           {
@@ -132,13 +139,14 @@
             "line": 17,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Enter Username",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [
                 "${USERNAME}"
               ],
-              "argument_pattern": "username"
+              "argument_pattern": "username",
+              "generation_hint": "Enter the specified username value into the login page username field. The value may be a parameter placeholder."
             }
           },
           {
@@ -148,13 +156,14 @@
             "line": 18,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Enter Password",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [
                 "${PASSWORD}"
               ],
-              "argument_pattern": "password"
+              "argument_pattern": "password",
+              "generation_hint": "Enter the specified password value into the login page password field. The value may be a parameter placeholder."
             }
           },
           {
@@ -164,11 +173,12 @@
             "line": 19,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Click Login Button",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [],
-              "argument_pattern": ""
+              "argument_pattern": "",
+              "generation_hint": "Click the login button to submit the entered credentials."
             }
           },
           {
@@ -178,13 +188,14 @@
             "line": 20,
             "status": "PARSED",
             "resolution": {
-              "status": "RESOLVED_GENERATED",
+              "status": "NEEDS_GENERATION",
               "keyword_name": "Verify Error Message Is Displayed",
               "source_file": "robot/resources/keywords/generated/sample_keywords.resource",
               "arguments": [
                 "${EXPECTED_ERROR}"
               ],
-              "argument_pattern": "expected_error"
+              "argument_pattern": "expected_error",
+              "generation_hint": "Verify that the specified error message is displayed on the login page after an invalid login attempt."
             }
           }
         ],
@@ -221,7 +232,7 @@
     "robot/resources/keywords/generated/sample_keywords.resource"
   ],
   "library_imports": [],
-  "unresolved_count": 0,
+  "unresolved_count": 11,
   "parse_errors": [],
   "warnings": []
 }
