@@ -58,19 +58,19 @@ class PipelineOrchestrator:
             path = Path(raw).resolve()
             key = str(path)
             if key in seen:
-                print(f"⚠️  Skipping duplicate: {raw}", file=sys.stderr)
+                print(f"Skipping duplicate: {raw}", file=sys.stderr)
                 continue
             seen.add(key)
 
             rel = self._rel(path) if path.is_relative_to(self.project_root) else ""
             if not rel.startswith(prefix):
-                print(f"❌ Must be under {prefix}: {raw}", file=sys.stderr)
+                print(f"Must be under {prefix}: {raw}", file=sys.stderr)
             elif path.suffix not in suffixes:
-                print(f"❌ Expected {suffixes}, got {path.suffix}: {raw}", file=sys.stderr)
+                print(f"Expected {suffixes}, got {path.suffix}: {raw}", file=sys.stderr)
             elif not path.exists():
-                print(f"❌ Not found: {raw}", file=sys.stderr)
+                print(f"Not found: {raw}", file=sys.stderr)
             else:
-                print(f"✓ {raw}")
+                print(f"OK: {raw}")
                 validated.append(path)
         return validated
 
@@ -87,7 +87,7 @@ class PipelineOrchestrator:
 
     def get_all_feature_files(self) -> List[Path]:
         if not self.bdd_features_dir.exists():
-            print(f"❌ Not found: {self.bdd_features_dir}", file=sys.stderr)
+            print(f"Not found: {self.bdd_features_dir}", file=sys.stderr)
             return []
         files = sorted(self.bdd_features_dir.glob("*.feature"))
         print(f"Found {len(files)} feature file(s) in {self.bdd_features_dir}")
@@ -96,7 +96,7 @@ class PipelineOrchestrator:
     def load_feature_list_from_file(self, list_file: str) -> List[str]:
         path = Path(list_file)
         if not path.exists():
-            print(f"❌ Not found: {list_file}", file=sys.stderr)
+            print(f"Not found: {list_file}", file=sys.stderr)
             return []
         return [l.strip() for l in path.read_text().splitlines()
                 if l.strip() and not l.startswith("#")]
@@ -130,7 +130,7 @@ class PipelineOrchestrator:
     # ── Agent invocation ──────────────────────────────────────────────────────
 
     def invoke_agent(self, agent: str, dry_run: bool = False, **kwargs) -> bool:
-        print(f"\n{'='*50}\n🔄 Agent: {agent}\n{'='*50}")
+        print(f"\n{'='*50}\n Agent: {agent}\n{'='*50}")
         prompt = self._prompt_for(agent, **kwargs)
 
         if dry_run:
@@ -148,15 +148,14 @@ class PipelineOrchestrator:
             tf_path = tf.name
 
         try:
-            cmd = [kilo, "run", "--agent", agent, "-f", tf_path, "--auto", "run"]
-            print(f"▶ {' '.join(cmd)}\n")
-            with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                  text=True, bufsize=1) as proc:
+            cmd = [kilo, "run", "--agent", agent, "-f", tf_path, "--auto", "run"] 
+            print(f"> {' '.join(cmd)}\n")
+            with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1) as proc:
                 for line in proc.stdout or []:
                     print(line, end="")
                 ret = proc.wait()
             if ret != 0:
-                print(f"❌ kilo exited {ret}", file=sys.stderr)
+                print(f"kilo exited {ret}", file=sys.stderr)
                 return False
         finally:
             os.unlink(tf_path)
@@ -192,15 +191,14 @@ class PipelineOrchestrator:
     # ── Per-file pipeline ─────────────────────────────────────────────────────
 
     def process_feature_file(self, feature_file: Path, dry_run: bool = False) -> bool:
-        print(f"\n📄 {self._rel(feature_file)}")
+        print(f"\n {self._rel(feature_file)}")
         stem = feature_file.stem
         ir_file = self.bdd_ir_dir / f"{stem}-ir.json"
         suite_file = self.robot_suites_dir / f"{stem}_suite.robot"
         resource_file = self.robot_resources_dir / "generated" / f"{stem}_keywords.resource"
 
         def fail(msg, **kw):
-            self._record(feature_file, kw.pop("feature_name", stem), "failed",
-                         errors=[msg], **kw)
+            self._record(feature_file, kw.pop("feature_name", stem), "failed", errors=[msg], **kw)
             return False
 
         # Stage 1: IR
@@ -239,19 +237,19 @@ class PipelineOrchestrator:
                      ir_path=ir_file, suite_path=suite_file,
                      resource_path=resource_file if unresolved else None,
                      unresolved=unresolved, robocop_clean=True)
-        print(f"✅ {stem}")
+        print(f"OK: {stem}")
         return True
 
     # ── Full run ──────────────────────────────────────────────────────────────
 
     def run(self, feature_files: List[Path], dry_run: bool = False) -> bool:
-        print(f"\n{'='*50}\n🚀 BTR Pipeline — {len(feature_files)} file(s)\n{'='*50}")
+        print(f"\n{'='*50}\n BTR Pipeline — {len(feature_files)} file(s)\n{'='*50}")
         if not feature_files:
-            print("❌ No feature files to process", file=sys.stderr)
+            print("No feature files to process", file=sys.stderr)
             return False
 
         if dry_run:
-            print("🔍 DRY RUN — no agents will be executed")
+            print("DRY RUN — no agents will be executed")
 
         self.summary["summary"]["total_files"] = len(feature_files)
         for f in feature_files:
@@ -261,8 +259,8 @@ class PipelineOrchestrator:
         summary_file.write_text(json.dumps(self.summary, indent=2))
 
         s = self.summary["summary"]
-        print(f"\n{'='*50}\n📊 Summary\n{'='*50}")
-        print(f"Total: {s['total_files']}  ✅ {s['successful_features']}  ❌ {s['failed_features']}")
+        print(f"\n{'='*50}\n Summary\n{'='*50}")
+        print(f"Total: {s['total_files']}  OK: {s['successful_features']}  KO: {s['failed_features']}")
         print(f"Unresolved keywords: {s['total_unresolved_keywords']}")
         print(f"Robocop clean: {s['all_robocop_clean']}")
         print(f"Report: {self._rel(summary_file)}")
