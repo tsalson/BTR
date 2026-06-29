@@ -1,0 +1,118 @@
+{
+  "source_file": "bdd/features/calculator.feature",
+  "feature": {
+    "name": "Calculator",
+    "description": "",
+    "tags": [],
+    "background": null,
+    "scenarios": [
+      {
+        "type": "Scenario",
+        "name": "Add two numbers",
+        "tags": [],
+        "line": 3,
+        "steps": [
+          {
+            "keyword": "Given ",
+            "effective_keyword": "Given",
+            "text": "first number is <a>",
+            "line": 4,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set First Number",
+              "source_file": "robot/resources/keywords/generated/calculator_keywords.resource",
+              "arguments": [
+                "${A}"
+              ],
+              "argument_pattern": "first_number",
+              "generation_hint": "Store or set the first operand value for the calculator operation."
+            }
+          },
+          {
+            "keyword": "And ",
+            "effective_keyword": "Given",
+            "text": "second number is <b>",
+            "line": 5,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Second Number",
+              "source_file": "robot/resources/keywords/generated/calculator_keywords.resource",
+              "arguments": [
+                "${B}"
+              ],
+              "argument_pattern": "second_number",
+              "generation_hint": "Store or set the second operand value for the calculator operation."
+            }
+          },
+          {
+            "keyword": "When ",
+            "effective_keyword": "When",
+            "text": "two numbers are added",
+            "line": 6,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Add Two Numbers",
+              "source_file": "robot/resources/keywords/generated/calculator_keywords.resource",
+              "arguments": [],
+              "argument_pattern": "",
+              "generation_hint": "Perform addition of the two stored numbers and store the result."
+            }
+          },
+          {
+            "keyword": "Then ",
+            "effective_keyword": "Then",
+            "text": "result should be <x>",
+            "line": 7,
+            "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Result Is",
+              "source_file": "robot/resources/keywords/generated/calculator_keywords.resource",
+              "arguments": [
+                "${X}"
+              ],
+              "argument_pattern": "expected_result",
+              "generation_hint": "Assert that the computed result matches the expected value."
+            }
+          }
+        ],
+        "examples": [
+          {
+            "headers": [
+              "a",
+              "b",
+              "x"
+            ],
+            "rows": [
+              [
+                "10",
+                "9",
+                "19"
+              ],
+              [
+                "-10",
+                "4",
+                "-6"
+              ],
+              [
+                "15",
+                "-7",
+                "8"
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "resource_imports": [
+    "robot/resources/keywords/generated/calculator_keywords.resource"
+  ],
+  "library_imports": [],
+  "unresolved_count": 4,
+  "parse_errors": [],
+  "warnings": []
+}

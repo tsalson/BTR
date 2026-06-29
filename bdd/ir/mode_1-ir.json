@@ -1,0 +1,998 @@
+{
+  "source_file": "bdd/features/mode_1.feature",
+  "feature": {
+    "name": "Mode 1: Excessive Rate of Descent",
+    "description": "The Mode 1 alert is intended to generate caution alerts and time-critical warning alerts when the aircraft has a high rate of descent relative to its height above terrain. Mode 1 is active during all segments of flight. In order to reduce nuisance alerts during steep approaches, an optional set of alerting curves may be employed when the aircraft is performing a steep approach. The determination if a steep approach is in progress can either be based on an input to the Equipment (such as a pilot-activated steep approach switch) or it can be based on internal logic (such as comparison of aircraft position to approach profiles in a database).",
+    "tags": [],
+    "background": null,
+    "scenarios": [
+      {
+        "type": "Scenario",
+        "name": "Mode Arming/Disarming",
+        "tags": ["MOPS_268"],
+        "line": 13,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "the plane is flying", "line": 14, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Check Mode 1 Is Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Check that Mode 1 alerting is currently armed/active."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "Mode 1 shall be armed", "line": 15, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Mode 1 Is Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that Mode 1 alerting is in the armed state."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Alert",
+        "tags": ["MOPS_269"],
+        "line": 20,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is armed", "line": 21, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the armed state."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "Mode 1 is not inhibited", "line": 22, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Mode 1 Is Not Inhibited",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure Mode 1 alerting is not inhibited."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "steep approach is not selected", "line": 23, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Steep Approach Is Not Selected",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure steep approach mode is not selected."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at least <rate of descent> feet per minute", "line": 24, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "When",
+            "text": "the height above terrain is between 100 and <height> feet", "line": 25, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, within the range 100 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is emitted within 2 seconds", "line": 26, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Mode 1 Caution Alert Is Emitted",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that a Mode 1 caution alert is emitted within 2 seconds."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["1560","100"], ["2200","630"], ["5700","2200"]]
+        }]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when not Armed",
+        "tags": ["MOPS_270"],
+        "line": 35,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is not armed", "line": 36, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Not Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the disarmed state."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is not emitted at all", "line": 37, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 caution alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when Inhibited",
+        "tags": ["MOPS_270"],
+        "line": 40,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is inhibited", "line": 41, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Inhibit Mode 1",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Inhibit Mode 1 alerting so it cannot fire."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is not emitted at all", "line": 42, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 caution alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Not Alert",
+        "tags": ["MOPS_270"],
+        "line": 45,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "steep approach is not selected", "line": 46, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Steep Approach Is Not Selected",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure steep approach mode is not selected."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at most <rate of descent> feet per minute", "line": 47, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "But", "effective_keyword": "When",
+            "text": "the height above terrain is not between 10 and <height> feet", "line": 48, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, ensuring it is outside the range 10 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is not emitted at all", "line": 49, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 caution alert is emitted."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["964","10"], ["2300","1550"], ["4400","2900"], ["5000","3200"], ["8000","4600"], ["12000","6467"]]
+        }]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Alert",
+        "tags": ["MOPS_271"],
+        "line": 63,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is armed", "line": 64, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the armed state."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "Mode 1 is not inhibited", "line": 65, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Mode 1 Is Not Inhibited",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure Mode 1 alerting is not inhibited."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "steep approach is selected", "line": 66, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Select Steep Approach",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Select steep approach mode."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at least <rate of descent> feet per minute", "line": 67, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "When",
+            "text": "the height above terrain is between 150 and <height> feet", "line": 68, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, within the range 150 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is emitted within 2 seconds", "line": 69, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Mode 1 Caution Alert Is Emitted",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that a Mode 1 caution alert is emitted within 2 seconds."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["1798","150"], ["1944","300"], ["3233","1078"], ["6225","2075"]]
+        }]
+      },
+      {
+        "type": "Scenario",
+        "name": "  Must Not Alert when not Armed",
+        "tags": ["MOPS_272"],
+        "line": 79,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is not armed", "line": 80, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Not Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the disarmed state."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is not emitted at all", "line": 81, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 caution alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when Inhibited",
+        "tags": ["MOPS_272"],
+        "line": 84,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is inhibited", "line": 85, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Inhibit Mode 1",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Inhibit Mode 1 alerting so it cannot fire."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is not emitted at all", "line": 86, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 caution alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Not Alert",
+        "tags": ["MOPS_272"],
+        "line": 89,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "steep approach is selected", "line": 90, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Select Steep Approach",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Select steep approach mode."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at most <rate of descent> feet per minute", "line": 91, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "But", "effective_keyword": "When",
+            "text": "the height above terrain is not between 10 and <height> feet", "line": 92, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, ensuring it is outside the range 10 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 caution alert is not emitted at all", "line": 93, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 caution alert is emitted."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["964","10"], ["2300","1550"], ["4400","2900"], ["5000","3200"], ["8000","4600"], ["12000","6467"]]
+        }]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Alert",
+        "tags": ["MOPS_273"],
+        "line": 107,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is armed", "line": 108, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the armed state."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "Mode 1 is not inhibited", "line": 109, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Mode 1 Is Not Inhibited",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure Mode 1 alerting is not inhibited."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "steep approach is not selected", "line": 110, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Steep Approach Is Not Selected",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure steep approach mode is not selected."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at least <rate of descent> feet per minute", "line": 111, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "When",
+            "text": "the height above terrain is between 100 and <height> feet", "line": 112, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, within the range 100 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is emitted within 2 seconds", "line": 113, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Mode 1 Warning Alert Is Emitted",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that a Mode 1 warning alert is emitted within 2 seconds."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["1600","100"], ["1850","300"], ["10100","1958"]]
+        }]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when not Armed",
+        "tags": ["MOPS_274"],
+        "line": 122,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is not armed", "line": 123, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Not Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the disarmed state."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is not emitted at all", "line": 124, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 warning alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when Inhibited",
+        "tags": ["MOPS_274"],
+        "line": 127,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is inhibited", "line": 128, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Inhibit Mode 1",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Inhibit Mode 1 alerting so it cannot fire."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is not emitted at all", "line": 129, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 warning alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Not Alert",
+        "tags": ["MOPS_274"],
+        "line": 132,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "steep approach is not selected", "line": 133, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Steep Approach Is Not Selected",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure steep approach mode is not selected."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at most <rate of descent> feet per minute", "line": 134, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "But", "effective_keyword": "When",
+            "text": "the height above terrain is not between 10 and <height> feet", "line": 135, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, ensuring it is outside the range 10 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is not emitted at all", "line": 136, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 warning alert is emitted."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["1217","10"], ["2300","1300"], ["4400","2500"], ["8000","3500"], ["12000","4611"]]
+        }]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Alert",
+        "tags": ["MOPS_275"],
+        "line": 149,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is armed", "line": 150, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the armed state."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "Mode 1 is not inhibited", "line": 151, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Mode 1 Is Not Inhibited",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure Mode 1 alerting is not inhibited."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "steep approach is selected", "line": 152, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Select Steep Approach",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Select steep approach mode."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at least <rate of descent> feet per minute", "line": 153, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "When",
+            "text": "the height above terrain is between 150 and <height> feet", "line": 154, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, within the range 150 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is emitted within 2 seconds", "line": 155, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Mode 1 Warning Alert Is Emitted",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that a Mode 1 warning alert is emitted within 2 seconds."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["1908","150"], ["2050","300"], ["10300","1958"]]
+        }]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when not Armed",
+        "tags": ["MOPS_276"],
+        "line": 164,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is not armed", "line": 165, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Mode 1 Not Armed",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Set Mode 1 alerting to the disarmed state."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is not emitted at all", "line": 166, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 warning alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Must Not Alert when Inhibited",
+        "tags": ["MOPS_276"],
+        "line": 169,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "Mode 1 is inhibited", "line": 170, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Inhibit Mode 1",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Inhibit Mode 1 alerting so it cannot fire."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is not emitted at all", "line": 171, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 warning alert is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario Outline",
+        "name": "Must Not Alert",
+        "tags": ["MOPS_276"],
+        "line": 174,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "steep approach is selected", "line": 175, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Select Steep Approach",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Select steep approach mode."
+            }
+          },
+          {
+            "keyword": "When", "effective_keyword": "When",
+            "text": "the rate of descent is at most <rate of descent> feet per minute", "line": 176, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Rate Of Descent",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${RATE_OF_DESCENT}"], "argument_pattern": "rate_of_descent",
+              "generation_hint": "Set the rate of descent to the given value in feet per minute."
+            }
+          },
+          {
+            "keyword": "But", "effective_keyword": "When",
+            "text": "the height above terrain is not between 10 and <height> feet", "line": 177, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Set Height Above Terrain",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${HEIGHT}"], "argument_pattern": "height",
+              "generation_hint": "Set the height above terrain to the given value in feet, ensuring it is outside the range 10 to height."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "a Mode 1 warning alert is not emitted at all", "line": 178, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify No Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that no Mode 1 warning alert is emitted."
+            }
+          }
+        ],
+        "examples": [{
+          "headers": ["rate of descent", "height"],
+          "rows": [["1217","10"], ["2300","1300"], ["4400","2500"], ["8000","3500"], ["12000","4611"]]
+        }]
+      },
+      {
+        "type": "Scenario",
+        "name": "Caution Alert",
+        "tags": ["MOPS_277"],
+        "line": 191,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "a caution level Mode 1 alert arises", "line": 192, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Trigger Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Trigger a caution level Mode 1 alert."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "an aural message \"Sink Rate\" shall be emitted", "line": 193, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Aural Message Is Emitted",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${AURAL_MESSAGE}"], "argument_pattern": "aural_message",
+              "generation_hint": "Assert that the specified aural message is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Warning Alert",
+        "tags": ["MOPS_278"],
+        "line": 196,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "a warning level Mode 1 alert arises", "line": 197, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Trigger Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Trigger a warning level Mode 1 alert."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "an aural message \"Pull Up\" shall be emitted", "line": 198, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Aural Message Is Emitted",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": ["${AURAL_MESSAGE}"], "argument_pattern": "aural_message",
+              "generation_hint": "Assert that the specified aural message is emitted."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Repeating Warning Alert",
+        "tags": ["MOPS_279"],
+        "line": 201,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "the warning level Mode 1 alert condition persists", "line": 202, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Warning Alert Condition Persists",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure the warning level Mode 1 alert condition remains active."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "the pilot didn't silence the alert", "line": 203, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure Alert Is Not Silenced",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure the pilot has not silenced the alert."
+            }
+          },
+          {
+            "keyword": "And", "effective_keyword": "Given",
+            "text": "no higher priority alert is triggered", "line": 204, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Ensure No Higher Priority Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Ensure no higher priority alert is triggered."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "the aural message shall be repeated periodically", "line": 205, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify Aural Message Is Repeated Periodically",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that the aural message is repeated at periodic intervals."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Caution",
+        "tags": ["MOPS_281"],
+        "line": 212,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "a Mode 1 caution alert is active", "line": 213, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Trigger Mode 1 Caution Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Trigger a caution level Mode 1 alert."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "the TAWS shall trigger a yellow or amber indicator", "line": 214, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify TAWS Visual Alert Is Yellow Or Amber",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that the TAWS visual indicator is yellow or amber."
+            }
+          }
+        ]
+      },
+      {
+        "type": "Scenario",
+        "name": "Warning",
+        "tags": ["MOPS_282"],
+        "line": 217,
+        "steps": [
+          {
+            "keyword": "Given", "effective_keyword": "Given",
+            "text": "a Mode 1 warning alert is active", "line": 218, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Trigger Mode 1 Warning Alert",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Trigger a warning level Mode 1 alert."
+            }
+          },
+          {
+            "keyword": "Then", "effective_keyword": "Then",
+            "text": "the TAWS shall trigger a red indicator", "line": 219, "status": "PARSED",
+            "resolution": {
+              "status": "NEEDS_GENERATION",
+              "keyword_name": "Verify TAWS Visual Alert Is Red",
+              "source_file": "robot/resources/keywords/generated/mode_1_keywords.resource",
+              "arguments": [], "argument_pattern": "",
+              "generation_hint": "Assert that the TAWS visual indicator is red."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "resource_imports": [
+    "robot/resources/keywords/generated/mode_1_keywords.resource"
+  ],
+  "library_imports": [
+    "BuiltIn"
+  ],
+  "unresolved_count": 127,
+  "parse_errors": [],
+  "warnings": []
+}
