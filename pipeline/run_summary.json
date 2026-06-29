@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-06-29T15:59:39+02:00",
+  "run_id": "20260629-155939",
+  "feature_files": [
+    {
+      "file": "bdd/features/mode_1.feature",
+      "feature_name": "Mode 1: Excessive Rate of Descent",
+      "ir_path": "bdd/ir/mode_1-ir.json",
+      "suite_path": "robot/suites/mode_1_suite.robot",
+      "resource_path": "robot/resources/keywords/generated/mode_1_keywords.resource",
+      "status": "success",
+      "unresolved_count": 127,
+      "robocop_clean": null,
+      "errors": [
+        "Robocop validation skipped: MCP tool robocop:get_robocop_report unavailable in this environment."
+      ]
+    }
+  ],
+  "summary": {
+    "total_files": 1,
+    "successful_features": 1,
+    "failed_features": 0,
+    "total_unresolved_keywords": 127,
+    "all_robocop_clean": null
+  },
+  "generated_artifacts": {
+    "ir_files": [
+      {
+        "path": "bdd/ir/mode_1-ir.json",
+        "size_bytes": 25487,
+        "scenarios": 21,
+        "unresolved_steps": 127
+      }
+    ],
+    "suite_files": [
+      {
+        "path": "robot/suites/mode_1_suite.robot",
+        "size_bytes": 6842,
+        "test_cases": 43
+      }
+    ],
+    "resource_files": [
+      {
+        "path": "robot/resources/keywords/generated/mode_1_keywords.resource",
+        "size_bytes": 4621,
+        "keywords": 23
+      }
+    ]
+  },
+  "next_steps": [
+    "Implement the 23 keyword stubs in robot/resources/keywords/generated/mode_1_keywords.resource",
+    "Run Robocop linting on generated .robot and .resource files",
+    "Run Robot Framework tests: robot robot/suites/mode_1_suite.robot"
+  ]
+}

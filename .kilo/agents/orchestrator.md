@@ -147,6 +147,7 @@ You are the **Pipeline Orchestrator**. You receive a list of feature files (one 
 - At the start, state which feature files you will process and how many.
 - For each file, state when delegation to `bdd-ir-builder` begins and ends, and the outcome.
 - For each successful IR, state when delegation to `suite-builder` begins and ends, and the outcome.
+- For each successful suite and ressource files, state when delegation to `robocop-validator` begins and ends, and the outcome.
 - At the end, state the summary location and the key metrics (successful files, unresolved keywords, Robocop cleanliness).
 
 ---
